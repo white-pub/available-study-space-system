@@ -1,0 +1,16 @@
+# Environment Files (for security)
+.env
+
+# node.js stuff
+node_modules
+/client/node_modules
+
+# logs
+*.log
+npm-debug.log*
+
+# database
+*.sql
+*.sql.bak
+*.dump
+
