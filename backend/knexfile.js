@@ -4,52 +4,22 @@
  * @type { Object.<string, import("knex").Knex.Config> }
  */
 
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
 
 module.exports = {
   development: {
     client: 'mysql2',
     connection: {
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
-    },
-  },
-
-  staging: {
-    client: 'mysql2',
-    connection: {
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      port: process.env.DB_PORT,
-    },
-    pool: {
-      min: 2,
-      max: 10,
+      host: '127.0.0.1', // localhost
+      user: process.env.MYSQL_USER,
+      password: process.env.MYSQL_PASSWORD,
+      database: process.env.MYSQL_DATABASE,
     },
     migrations: {
-      tableName: 'knex_migrations',
+      directory: './migrations',
+    },
+    seeds: {
+      directory: './seeds',
     },
   },
-  production: {
-    client: 'mysql2',
-    connection: {
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      port: process.env.DB_PORT,
-    },
-    pool: {
-      min: 2,
-      max: 10,
-    },
-    migrations: {
-      tableName: 'knex_migrations',
-    },
-  },
-
 };
