@@ -16,3 +16,5 @@ npm-debug.log*
 
 # vs code setting
 .vscode
+
+biome.json
