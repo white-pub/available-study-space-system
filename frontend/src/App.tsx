@@ -4,7 +4,7 @@ import LeftSidebar from './components/layout/LeftSidebar';
 import RightSidebar from './components/layout/RightSidebar';
 import HeaderSection from './components/layout/HeaderSection';
 import DropdownSection from './components/dropdown/DropdownSection';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const App: React.FC = () => {
   return (
