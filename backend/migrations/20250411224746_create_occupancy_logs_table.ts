@@ -1,8 +1,10 @@
+import { Knex } from "knex";
+
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.up = async function (knex) {
+export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable('occupancy_logs', function (table) {
     table.increments('log_id').primary(); // Auto-incrementing primary key
     table.integer('room_id').unsigned().notNullable(); // Foreign key to rooms table
@@ -22,6 +24,6 @@ exports.up = async function (knex) {
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.down = async function (knex) {
+export async function down(knex: Knex): Promise<void> {
   await knex.schema.dropTable('occupancy_logs');
 };

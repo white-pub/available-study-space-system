@@ -1,9 +1,11 @@
+import { Knex } from "knex";
+
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> } 
  */
 
-exports.seed = async function (knex) {
+export async function seed(knex: Knex): Promise<void> {
   // Clear existing data: Delete child table first to avoid foreign key constraints
   await knex('occupancy_logs').del();
   await knex('building_hours').del();
@@ -36,7 +38,7 @@ exports.seed = async function (knex) {
       ],
     },
     {
-      building_name: 'Jansow',
+      building_name: 'Janzow',
       rooms: [
         { room_name: '014', capacity: 5, distance: 1, whiteboard: 1, tv: 0 },
       ],
@@ -99,7 +101,7 @@ exports.seed = async function (knex) {
       ],
     },
     {
-      building_name: 'Jansow',
+      building_name: 'Janzow',
       hours: [
         { day_of_week: 'Monday', open_at: '00:00:00', close_at: '23:59:59' },
         { day_of_week: 'Tuesday', open_at: '00:00:00', close_at: '23:59:59' },
@@ -172,7 +174,7 @@ exports.seed = async function (knex) {
       occupancy_end: '2025-04-03 09:50:36',
     },
     {
-      building_name: 'Jansow',
+      building_name: 'Janzow',
       room_name: '014',
       occupancy_start: '2025-04-03 10:58:36',
       occupancy_end: '2025-04-03 15:58:37',
@@ -202,7 +204,7 @@ exports.seed = async function (knex) {
     );
 
   // Create a map for fast lookup of room_id
-  const roomIdMap = {};
+  const roomIdMap: Record<string, number> = {};
   roomMappings.forEach(({ room_id, room_name, building_name }) => {
     roomIdMap[`${building_name}_${room_name}`] = room_id; // Use a unique key combining building_name and room_name
   });
