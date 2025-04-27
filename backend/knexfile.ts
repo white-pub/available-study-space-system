@@ -1,6 +1,5 @@
 // Update knex config settings.
 
-import { Knex } from 'knex';  
 // import 'dotenv/config'; // Load environment variables from .env file
 import * as dotenv from 'dotenv';
 dotenv.config({ path: '../.env' });
@@ -12,7 +11,10 @@ dotenv.config({ path: '../.env' });
 
 // require('dotenv').config({ path: '../.env' });
 
-const config: { [key: string]: Knex.Config } = {
+/**
+ * @type{import('knex').Knex.Config)}
+ */
+const config = {
   development: {
     client: 'mysql2',
     connection: {

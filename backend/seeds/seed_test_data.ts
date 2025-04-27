@@ -1,11 +1,10 @@
-import { Knex } from "knex";
 
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> } 
  */
 
-export async function seed(knex: Knex): Promise<void> {
+export async function seed(knex): Promise<void> {
   // Clear existing data: Delete child table first to avoid foreign key constraints
   await knex('occupancy_logs').del();
   await knex('building_hours').del();
