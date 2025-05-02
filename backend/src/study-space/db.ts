@@ -37,7 +37,7 @@ type OccupiedSpaces = {
     log_id: number;
     room_id: StudySpace["room_id"];
     occupancy_start: Date;
-    occupency_end: Date;
+    occupancy_end: Date;
     created_at: Date;
     updated_at: Date;
 }
@@ -145,6 +145,72 @@ export async function getAllOccupiedSpaces(db: Knex): Promise<OccupiedSpaces[]> 
 
     return result as OccupiedSpaces[];
 }
+
+export async function createOccupiedSpace(db: Knex, data: {
+    room_id: number;
+    occupancy_start: Date;
+    occupancy_end?: Date | null;
+}): Promise<OccupiedSpaces | null> {
+    try {
+        // Insert data using Knex's query builder
+        const [insertId] = await db("occupancy_logs")
+            .insert({
+                room_id: data.room_id,
+                occupancy_start: data.occupancy_start.toISOString().replace('Z','').replace('T', ' '), // Ensure proper format
+                occupancy_end: data.occupancy_end ? data.occupancy_end.toISOString().replace('Z','').replace('T', ' ') : null,
+                created_at: db.fn.now(),
+                updated_at: db.fn.now(),
+            })
+            .returning("log_id"); // Ensure returning inserted ID
+
+        // Fetch the inserted row
+        const insertedRow = await db("occupancy_logs")
+            .where("log_id", insertId)
+            .first();
+
+        return insertedRow as OccupiedSpaces | null;
+    } catch (error) {
+        console.error("Database insertion failed:", error);
+        return null;
+    }
+}
+
+export async function updateOccupiedSpace(db: Knex, id: number, data:{
+    occupancy_end?: Date | null;
+}): Promise<OccupiedSpaces | null> {
+    try{
+        const updatedRows = await db("occupancy_logs")
+            .where("log_id", id) // Ensure the correct row is being updated
+            .update({
+                occupancy_end: data.occupancy_end ? data.occupancy_end.toISOString().replace('Z', '').replace('T', ' ') : null,
+                updated_at: db.fn.now(),
+            });
+
+        return updatedRows ? await db("occupancy_logs").where("log_id", id).first() : null;
+    
+
+    } catch (error) {
+        console.error("Database update failed:", error);
+        return null;
+    }
+}
+
+export async function deleteOccupiedSpace(db: Knex, id: number) {
+    try {
+        const deletedOccupied = await db("occupancy_logs")
+            .select("*")
+            .where("log_id", "=", id)
+            .first()
+            .del();
+
+        return deletedOccupied ? { success: true, message: "Occupied space deleted successfully" } : { success: false, error: "Occupied space not found" };
+    } catch (error) {
+        return { success: false, error: "Failed to delete occupied space" };
+    }
+}
+
+
+
 
 // Fetch a buildings hours by its id.
 // null required because the id either exists or does not.

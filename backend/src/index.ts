@@ -1,5 +1,6 @@
 // Import the required modules
 import express from 'express'; // Express is used to create the web server
+import bodyParser from "body-parser"
 import { buildingHandlers, buildingHoursHandlers, buildingRoomHandlers, occupiedSpacesHandlers, studySpaceHandlers } from "./study-space/handlers"; // Import the routes for study spaces
 import knex from 'knex';
 import config from "../knexfile"
@@ -17,6 +18,7 @@ function registerRoutes(server: express.Express): void {
 
 function bootstrapApp(): express.Express {
     const server = express(); // Create an instance of the Express app
+    server.use(bodyParser.json())
 
     server.set("db", knex(config.development));
 
