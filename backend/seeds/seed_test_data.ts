@@ -1,10 +1,10 @@
-
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> } 
  */
+import type { Knex } from "knex";
 
-export async function seed(knex): Promise<void> {
+export async function seed(knex: Knex): Promise<void> {
   // Clear existing data: Delete child table first to avoid foreign key constraints
   await knex('occupancy_logs').del();
   await knex('building_hours').del();
@@ -17,29 +17,146 @@ export async function seed(knex): Promise<void> {
     {
       building_name: 'Dunklau',
       rooms: [
-        { room_name: '001', capacity: 2, distance: 5, whiteboard: 1, tv: 1 },
-        { room_name: '105', capacity: 3, distance: 6, whiteboard: 0, tv: 1 },
-        { room_name: '107', capacity: 4, distance: 7, whiteboard: 1, tv: 1 },
-        { room_name: '202', capacity: 5, distance: 7, whiteboard: 0, tv: 1 },
-        { room_name: '205', capacity: 6, distance: 8, whiteboard: 0, tv: 1 },
-        { room_name: '207', capacity: 4, distance: 8, whiteboard: 0, tv: 1 },
+        {
+          room_name: '001',
+          capacity: 2,
+          distance: 5,
+          whiteboard: 1,
+          tv: 1,
+          room_pic_url: 'https://drive.google.com/file/d/1YgBk_-4gEYJobSk2TRj9TT7TZYCvYU6J/view?usp=drive_link',
+          building_map_url: 'https://drive.google.com/file/d/1YpAEgmc9Mg2PNjLI2A6AQb6sYyuEToMo/view?usp=drive_link',
+          campus_map_url: 'https://drive.google.com/file/d/1YosZ0FxupXf8laTMia9JuMHnVQtRN-Vu/view?usp=drive_link',
+        },
+        {
+          room_name: '105',
+          capacity: 3,
+          distance: 6,
+          whiteboard: 0,
+          tv: 1,
+          room_pic_url: 'https://drive.google.com/file/d/1YD-8EdxlfGGJxnjdc6RQr-EpbC9GznVp/view?usp=drive_link',
+          building_map_url: 'https://drive.google.com/file/d/1YaZjqfVBz64NHvEzfFOeAUmzdYSdLXPZ/view?usp=drive_link',
+          campus_map_url: 'https://drive.google.com/file/d/1YFjy2rYiFgIuERcknkHn33kdtELejjfw/view?usp=drive_link',
+        },
+        {
+          room_name: '107',
+          capacity: 4,
+          distance: 7,
+          whiteboard: 1,
+          tv: 1,
+          room_pic_url: 'https://drive.google.com/file/d/1XrliqbFVez_OVfNL_JxCU-4e4dCVkjI6/view?usp=drive_link',
+          building_map_url: 'https://drive.google.com/file/d/1Y-HaUBCdg_6kjjyufgQOYtU807kUPliE/view?usp=drive_link',
+          campus_map_url: 'https://drive.google.com/file/d/1XsWOYxcfng9k1mSU1645wygNCxqU5qbb/view?usp=drive_link',
+        },
+        {
+          room_name: '202',
+          capacity: 5,
+          distance: 7,
+          whiteboard: 0,
+          tv: 1,
+          room_pic_url: 'https://drive.google.com/file/d/1Xm9g2up5KVe72_ykWE4rO9QQreHr75zB/view?usp=drive_link',
+          building_map_url: 'https://drive.google.com/file/d/1Xn6_xPvD-Uh7P_YKdzg61Qa9EZlMmm7x/view?usp=drive_link',
+          campus_map_url: 'https://drive.google.com/file/d/1Xn3nCAiItXjdhMZVHd252iERRMLfaXhD/view?usp=drive_link',
+        },
+        {
+          room_name: '205',
+          capacity: 6,
+          distance: 8,
+          whiteboard: 0,
+          tv: 1,
+          room_pic_url: 'https://drive.google.com/file/d/1XQamNh3WGT8m39vY4upsNK-X9heQlA0p/view?usp=drive_link',
+          building_map_url: 'https://drive.google.com/file/d/1Xd7aV1y2vn6SOSQPglQH_syua3gEvNWN/view?usp=drive_link',
+          campus_map_url: 'https://drive.google.com/file/d/1XcmlcdpU3BqVMEl1XNLfgSVkYKGtOWSI/view?usp=drive_link',
+        },
+        {
+          room_name: '207',
+          capacity: 4,
+          distance: 8,
+          whiteboard: 0,
+          tv: 1,
+          room_pic_url: 'https://drive.google.com/file/d/1ZftNx6CcCn-9T_cuj_kowxQj-BfLUN7h/view?usp=drive_link',
+          building_map_url: 'https://drive.google.com/file/d/1ZjcVO2WRtErhqFCaO92PLfb6m091A2OT/view?usp=drive_link',
+          campus_map_url: 'https://drive.google.com/file/d/1ZiD-Fr8KoeHebKeF40wV8uF3s90Z6x-i/view?usp=drive_link',
+        },
       ],
     },
     {
       building_name: 'Link Library',
       rooms: [
-        { room_name: '005', capacity: 4, distance: 6, whiteboard: 1, tv: 1 },
-        { room_name: '007', capacity: 4, distance: 6, whiteboard: 1, tv: 1 },
-        { room_name: '203', capacity: 3, distance: 7, whiteboard: 1, tv: 1 },
-        { room_name: '212', capacity: 15, distance: 8, whiteboard: 1, tv: 0 },
-        { room_name: '213', capacity: 5, distance: 8, whiteboard: 1, tv: 1 },
-        { room_name: '220', capacity: 6, distance: 9, whiteboard: 0, tv: 1 },
+        {
+          room_name: '005',
+          capacity: 4,
+          distance: 6,
+          whiteboard: 1,
+          tv: 1,
+          room_pic_url: 'https://drive.google.com/file/d/1ZTRbCBiO4p4D1bAZiyuNNkUrBLWej3jJ/view?usp=drive_link',
+          building_map_url: 'https://drive.google.com/file/d/1ZaYqnk-nMzSVypJVxC0PzbweR0BPcz6q/view?usp=drive_link',
+          campus_map_url: 'https://drive.google.com/file/d/1Za544B3sAHNk4qjx0ZTFnzxHKJYrgkLv/view?usp=drive_link',
+        },
+        {
+          room_name: '007',
+          capacity: 4,
+          distance: 6,
+          whiteboard: 1,
+          tv: 1,
+          room_pic_url: 'https://drive.google.com/file/d/1ZLKo6-cZfCgXO5G5nB6zu1NzcYRJ6Qss/view?usp=drive_link',
+          building_map_url: 'https://drive.google.com/file/d/1ZSvlHZK1vxsBOwiKG9FdDjYNcUB_Sa2z/view?usp=drive_link',
+          campus_map_url: 'https://drive.google.com/file/d/1ZSFIxyDdaTdZVkgrA1skVuszFr6Lqjep/view?usp=drive_link',
+        },
+        {
+          room_name: '203',
+          capacity: 3,
+          distance: 7,
+          whiteboard: 1,
+          tv: 1,
+          room_pic_url: 'https://drive.google.com/file/d/1ZBD_u_z1b6OnjSOoKcRHmAFnUoTwQZkP/view?usp=drive_link',
+          building_map_url: 'https://drive.google.com/file/d/1ZHEVqrslZ89WJEOoivK8kAO5qL9pGDvY/view?usp=drive_link',
+          campus_map_url: 'https://drive.google.com/file/d/1ZFSfv6KYmV6cH9bl92sWG4P8q7n0g0XF/view?usp=drive_link',
+        },
+        {
+          room_name: '212',
+          capacity: 15,
+          distance: 8,
+          whiteboard: 1,
+          tv: 0,
+          room_pic_url: 'https://drive.google.com/file/d/1Yqz8ura0En689umDkEift51fcCj42Sob/view?usp=drive_link',
+          building_map_url: 'https://drive.google.com/file/d/1Z9ZI8lNlIFWWHUzXvdxnMzfhT1OVMyi-/view?usp=drive_link',
+          campus_map_url: 'https://drive.google.com/file/d/1Z853gFn78gp6WI4f2lCuJbJMyakRSOm_/view?usp=drive_link',
+        },
+        {
+          room_name: '213',
+          capacity: 5,
+          distance: 8,
+          whiteboard: 1,
+          tv: 1,
+          room_pic_url: 'https://drive.google.com/file/d/1_UaxrL1Lz3C0vjZSjO4tb_-WPsp4flfb/view?usp=drive_link',
+          building_map_url: 'https://drive.google.com/file/d/1_VLgT2RaXr8fLNe2_7Z6oliiHQ5ayAiP/view?usp=drive_link',
+          campus_map_url: 'https://drive.google.com/file/d/1_Ur4JJxzAsVTeC1NRV2OLl1DE4FDtqde/view?usp=drive_link',
+        },
+        {
+          room_name: '220',
+          capacity: 6,
+          distance: 9,
+          whiteboard: 0,
+          tv: 1,
+          room_pic_url: 'https://drive.google.com/file/d/1_4BK-oPwgfr55QaZ1A9gmfwc5ZQwkZb1/view?usp=drive_link',
+          building_map_url: 'https://drive.google.com/file/d/1_TQwD4XoDsd-25XI9XPmA3mVfryu8f4Y/view?usp=drive_link',
+          campus_map_url: 'https://drive.google.com/file/d/1_SfQttYGSIeHXTT82UTSPDb6WgoMYIuz/view?usp=drive_link',
+        },
       ],
     },
     {
       building_name: 'Janzow',
       rooms: [
-        { room_name: '014', capacity: 5, distance: 1, whiteboard: 1, tv: 0 },
+        {
+          room_name: '014',
+          capacity: 5,
+          distance: 1,
+          whiteboard: 1,
+          tv: 0,
+          room_pic_url: 'https://drive.google.com/file/d/1ZkEfM9wCZzSNf81Bq3aBndBOVeb1DVNG/view?usp=drive_link',
+          building_map_url: 'https://drive.google.com/file/d/1ZqaZSeUJf5_ARnIUltx9TLBw3vkTMcnK/view?usp=drive_link',
+          campus_map_url: 'https://drive.google.com/file/d/1ZoV91zC894Cv3N2owSyHrELCpgp6uYgU/view?usp=drive_link',
+        },
       ],
     },
   ];
@@ -112,7 +229,7 @@ export async function seed(knex): Promise<void> {
       ],
     },
   ];
-  
+
   // Insert data
   for (const building of hoursData) {
     // Retrieve building_id based on building_name
@@ -133,7 +250,7 @@ export async function seed(knex): Promise<void> {
   }
 
   // handle occupancy_logs mock data
-  
+
   // Mock data for occupancy logs
   const occupancyLogs = [
     {
@@ -222,6 +339,5 @@ export async function seed(knex): Promise<void> {
       console.error(`Room ID not found for ${log.building_name} - ${log.room_name}`);
     }
   }
-
-
 };
+
