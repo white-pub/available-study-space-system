@@ -80,7 +80,7 @@ export function buildingRoomHandlers(e: Express): void {
 
 // Allows the routering to a specific occupied spaces based off id or all of them.
 export function occupiedSpacesHandlers(e: Express): void {
-    e.get("/occupied-spaces/:id", 
+    e.get("/occupancy-log/:id", 
         validate({
             params: IdParamSchema,
         }),
@@ -90,7 +90,7 @@ export function occupiedSpacesHandlers(e: Express): void {
         res.send(u);
     });
 
-    e.get("/occupied-spaces", 
+    e.get("/occupancy-log", 
         
     async (req, res) => {
         const u = await getAllOccupiedSpaces(req.app.get("db"));
@@ -99,7 +99,7 @@ export function occupiedSpacesHandlers(e: Express): void {
     })
 
     // POST route to create a new occupied space
-    e.post("/occupied-spaces",
+    e.post("/occupancy-log",
         validate({
             body: z.object({
                 room_id: z.number(),
@@ -122,7 +122,7 @@ export function occupiedSpacesHandlers(e: Express): void {
     );
 
     // UPDATE route to update occupancy_end time in an occupied space
-    e.put("/occupied-spaces/:id",
+    e.put("/occupancy-log/:id",
         validate({
             params: IdParamSchema,
             body: z.object({
@@ -142,7 +142,7 @@ export function occupiedSpacesHandlers(e: Express): void {
     );
 
     // DELETE route to remove an occupied space
-    e.delete("/occupied-spaces/:id", 
+    e.delete("/occupancy-log/:id", 
         validate({
             params: IdParamSchema
         }),
