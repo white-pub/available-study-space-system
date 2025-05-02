@@ -22,6 +22,7 @@ const config = {
       password: process.env.MYSQL_PASSWORD,
       database: process.env.MYSQL_DATABASE,
     },
+    // debug: true,
     migrations: {
       directory: './migrations',
       extension: 'ts', // Use TypeScript for migrations

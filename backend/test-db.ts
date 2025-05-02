@@ -8,8 +8,8 @@ import * as dotenv from 'dotenv';
 // Load environment variables from .env file
 dotenv.config({ path: '../.env' });
 
-// Debug: Log environment variables
-console.log('Environment Variables:');
+// // Debug: Log environment variables
+// console.log('Environment Variables:');
 console.log({
   MYSQL_HOST: process.env.MYSQL_HOST,
   MYSQL_PORT: process.env.MYSQL_PORT,
