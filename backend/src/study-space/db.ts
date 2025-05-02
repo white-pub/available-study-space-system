@@ -8,6 +8,9 @@ type StudySpace = {
     distance: number;
     whiteboard: number;
     tv: number;
+    room_pic_url: string;
+    building_map_url: string;
+    campus_map_url: string;
     created_at: Date;
     updated_at: Date;
 };
@@ -63,20 +66,20 @@ type BuildingHours = {
 // null required because the id either exists or does not.
 export async function getStudySpaceById(db: Knex, id: number): Promise<StudySpace | null> {
     const result = await db
-    .select("*")
-    .from("rooms")
-    .where("room_id", "=", id)
-    .first(); // Should return the first id that matches when fetching.
+        .select("*")
+        .from("rooms")
+        .where("room_id", "=", id)
+        .first(); // Should return the first id that matches when fetching.
     return result as StudySpace | null;
 
 }
 
 // Fetch all study spaces for listing.
-export async function getAllStudySpaces(db:Knex): Promise<StudySpace[]> {
+export async function getAllStudySpaces(db: Knex): Promise<StudySpace[]> {
     const result = await db
-    .select("*")
-    .from("rooms")
-    
+        .select("*")
+        .from("rooms")
+
     return result as StudySpace[];
 }
 
@@ -84,20 +87,20 @@ export async function getAllStudySpaces(db:Knex): Promise<StudySpace[]> {
 // null required because the id either exists or does not.
 export async function getBuildingById(db: Knex, id: number): Promise<Building | null> {
     const result = await db
-    .select("*")
-    .from("buildings")
-    .where("building_id", "=", id)
-    .first(); // Should return the first id that matches when fetching.
+        .select("*")
+        .from("buildings")
+        .where("building_id", "=", id)
+        .first(); // Should return the first id that matches when fetching.
     return result as Building | null;
 
 }
 
 // Fetch all buildings for listing.
-export async function getAllBuildings(db:Knex): Promise<Building[]> {
+export async function getAllBuildings(db: Knex): Promise<Building[]> {
     const result = await db
-    .select("*")
-    .from("buildings")
-    
+        .select("*")
+        .from("buildings")
+
     return result as Building[];
 }
 
@@ -105,20 +108,20 @@ export async function getAllBuildings(db:Knex): Promise<Building[]> {
 // null required because the id either exists or does not.
 export async function getBuildingRoomById(db: Knex, id: number): Promise<BuildingRoom | null> {
     const result = await db
-    .select("*")
-    .from("buildings_rooms")
-    .where("building_room_id", "=", id)
-    .first(); // Should return the first id that matches when fetching.
+        .select("*")
+        .from("buildings_rooms")
+        .where("building_room_id", "=", id)
+        .first(); // Should return the first id that matches when fetching.
     return result as BuildingRoom | null;
 
 }
 
 // Fetch all buildings for listing.
-export async function getAllBuildingRooms(db:Knex): Promise<BuildingRoom[]> {
+export async function getAllBuildingRooms(db: Knex): Promise<BuildingRoom[]> {
     const result = await db
-    .select("*")
-    .from("buildings_rooms")
-    
+        .select("*")
+        .from("buildings_rooms")
+
     return result as BuildingRoom[];
 }
 
@@ -126,20 +129,20 @@ export async function getAllBuildingRooms(db:Knex): Promise<BuildingRoom[]> {
 // null required because the id either exists or does not.
 export async function getOccupiedSpaceById(db: Knex, id: number): Promise<OccupiedSpaces | null> {
     const result = await db
-    .select("*")
-    .from("occupancy_logs")
-    .where("log_id", "=", id)
-    .first(); // Should return the first id that matches when fetching.
+        .select("*")
+        .from("occupancy_logs")
+        .where("log_id", "=", id)
+        .first(); // Should return the first id that matches when fetching.
     return result as OccupiedSpaces | null;
 
 }
 
 // Fetch all occupied spaces for listing.
-export async function getAllOccupiedSpaces(db:Knex): Promise<OccupiedSpaces[]> {
+export async function getAllOccupiedSpaces(db: Knex): Promise<OccupiedSpaces[]> {
     const result = await db
-    .select("*")
-    .from("occupancy_logs")
-    
+        .select("*")
+        .from("occupancy_logs")
+
     return result as OccupiedSpaces[];
 }
 
@@ -147,19 +150,19 @@ export async function getAllOccupiedSpaces(db:Knex): Promise<OccupiedSpaces[]> {
 // null required because the id either exists or does not.
 export async function getBuildingHourById(db: Knex, id: number): Promise<BuildingHours | null> {
     const result = await db
-    .select("*")
-    .from("building_hours")
-    .where("building_hour_id", "=", id)
-    .first(); // Should return the first id that matches when fetching.
+        .select("*")
+        .from("building_hours")
+        .where("building_hour_id", "=", id)
+        .first(); // Should return the first id that matches when fetching.
     return result as BuildingHours | null;
 
 }
 
 // Fetch all building hours for listing.
-export async function getAllBuildingHours(db:Knex): Promise<BuildingHours[]> {
+export async function getAllBuildingHours(db: Knex): Promise<BuildingHours[]> {
     const result = await db
-    .select("*")
-    .from("building_hours")
-    
+        .select("*")
+        .from("building_hours")
+
     return result as BuildingHours[];
 }
