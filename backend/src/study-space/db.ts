@@ -251,7 +251,7 @@ export async function getAllRoomsWithBuildingInfo(db: Knex): Promise<any[]> {
             "rooms.campus_map_url",
             "buildings.building_id",
             "buildings.building_name",
-            "building_hours.day_of_the_week",
+            "building_hours.day_of_week",
             "building_hours.open_at",
             "building_hours.close_at"
         )
@@ -259,7 +259,7 @@ export async function getAllRoomsWithBuildingInfo(db: Knex): Promise<any[]> {
         .join("buildings_rooms", "rooms.room_id", "buildings_rooms.room_id") // maps rooms to buildings
         .join("buildings", "buildings_rooms.building_id", "buildings.building_id")
         .join("building_hours", "buildings.building_id", "building_hours.building_id")
-        .where("building_hours.day_of_the_week", today); // Only include today's building hours
+        .where("building_hours.day_of_week", today); // Only include today's building hours
 
     return roomsWithBuildingInfo;
 }

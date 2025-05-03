@@ -2,13 +2,12 @@
 import type { Express } from 'express';
 import validate from "express-zod-safe";
 import { z } from "zod";
-import { createOccupiedSpaceLog, updateOccupiedSpaceLog, deleteOccupiedSpaceLog, getAllBuildingHours, getAllBuildingRooms, getAllBuildings, getAllOccupancyLog, getAllStudySpaces, getBuildingById, getBuildingHourById, getBuildingRoomById, getOccupiedSpaceLogById, getStudySpaceById } from './db';
+import { createOccupiedSpaceLog, updateOccupiedSpaceLog, deleteOccupiedSpaceLog, getAllBuildingHours, getAllBuildingRooms, getAllBuildings, getAllOccupancyLog, getAllStudySpaces, getBuildingById, getBuildingHourById, getBuildingRoomById, getOccupiedSpaceLogById, getStudySpaceById, getAllRoomsWithBuildingInfo } from './db';
 
 const IdParamSchema = z.object({
     id: z.coerce.number().int().positive(),
 });
 
-type IdParam = z.infer<typeof IdParamSchema>;
 
 // Allows the routering to a specific study space based off id or all of them.
 export function studySpaceHandlers(e: Express): void {
@@ -187,4 +186,23 @@ export function buildingHoursHandlers(e: Express): void {
         })
 
 
+}
+
+// Api for the tables that has all building info attached to room info
+export function allRoomWithBuildingInfoHandlers(e: Express): void {
+    e.get("/all-room-with-building-info",
+
+        async (req, res) => {
+            const db = req.app.get("db");
+
+            try {
+                // Fetch the joined table from the database
+                const joinedTable = await getAllRoomsWithBuildingInfo(db); 
+                res.status(200).send(joinedTable);
+            } catch (error) { // error handling
+                console.error("Error fetching joined table - allRoomWithBuildingInfo:", error);
+                res.status(500).send({ error: "Failed to fetch joined table - allRoomWithBuildingInfo" });
+            }
+        }
+    );
 }
