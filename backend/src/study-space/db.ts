@@ -234,9 +234,11 @@ export async function getAllBuildingHours(db: Knex): Promise<BuildingHours[]> {
 // Create one joined table with all the information about a room:
 // room_id, room_name, ..., building_id, building_name, building_hours (for today)
 export async function getAllRoomsWithBuildingInfo(db: Knex): Promise<any[]> {
-    const today = new Date().toLocaleString("en-US", { weekday: "long" }); // Get today's day name (e.g., "Monday")
+    
+    // Get today's day name (e.g., "Monday")
+    const today = new Date().toLocaleString("en-US", { weekday: "long" }); 
 
-    const result = await db
+    const roomsWithBuildingInfo = await db
         .select(
             "rooms.room_id",
             "rooms.room_name",
@@ -253,11 +255,11 @@ export async function getAllRoomsWithBuildingInfo(db: Knex): Promise<any[]> {
             "building_hours.open_at",
             "building_hours.close_at"
         )
-        .from("rooms")
-        .join("buildings_rooms", "rooms.room_id", "buildings_rooms.room_id")
+        .from("rooms") // rooms is the core table
+        .join("buildings_rooms", "rooms.room_id", "buildings_rooms.room_id") // maps rooms to buildings
         .join("buildings", "buildings_rooms.building_id", "buildings.building_id")
         .join("building_hours", "buildings.building_id", "building_hours.building_id")
         .where("building_hours.day_of_the_week", today); // Only include today's building hours
 
-    return result;
+    return roomsWithBuildingInfo;
 }
