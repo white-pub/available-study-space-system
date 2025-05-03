@@ -1,7 +1,7 @@
 // Import the required modules
 import express from 'express'; // Express is used to create the web server
 import bodyParser from "body-parser"
-import { buildingHandlers, buildingHoursHandlers, buildingRoomHandlers, occupiedSpacesHandlers, studySpaceHandlers } from "./study-space/handlers"; // Import the routes for study spaces
+import { buildingHandlers, buildingHoursHandlers, buildingRoomHandlers, occupiedSpaceLogHandlers, studySpaceHandlers } from "./study-space/handlers"; // Import the routes for study spaces
 import knex from 'knex';
 import config from "../knexfile"
 
@@ -12,7 +12,7 @@ function registerRoutes(server: express.Express): void {
     studySpaceHandlers(server);
     buildingHandlers(server);
     buildingRoomHandlers(server);
-    occupiedSpacesHandlers(server);
+    occupiedSpaceLogHandlers(server);
     buildingHoursHandlers(server);
 }
 

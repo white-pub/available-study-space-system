@@ -33,7 +33,7 @@ type BuildingRoom = {
 }
 
 // Define occupied spaces
-type OccupiedSpaces = {
+type OccupiedSpaceLog = {
     log_id: number;
     room_id: StudySpace["room_id"];
     occupancy_start: Date;
@@ -125,39 +125,39 @@ export async function getAllBuildingRooms(db: Knex): Promise<BuildingRoom[]> {
     return result as BuildingRoom[];
 }
 
-// Fetch an occupied space by its id.
+// Fetch an occupied space log by its id.
 // null required because the id either exists or does not.
-export async function getOccupiedSpaceById(db: Knex, id: number): Promise<OccupiedSpaces | null> {
+export async function getOccupiedSpaceLogById(db: Knex, id: number): Promise<OccupiedSpaceLog | null> {
     const result = await db
         .select("*")
         .from("occupancy_logs")
         .where("log_id", "=", id)
         .first(); // Should return the first id that matches when fetching.
-    return result as OccupiedSpaces | null;
+    return result as OccupiedSpaceLog | null;
 
 }
 
 // Fetch all occupied spaces for listing.
-export async function getAllOccupiedSpaces(db: Knex): Promise<OccupiedSpaces[]> {
+export async function getAllOccupancyLog(db: Knex): Promise<OccupiedSpaceLog[]> {
     const result = await db
         .select("*")
         .from("occupancy_logs")
 
-    return result as OccupiedSpaces[];
+    return result as OccupiedSpaceLog[];
 }
 
-export async function createOccupiedSpace(db: Knex, data: {
+export async function createOccupiedSpaceLog(db: Knex, data: {
     room_id: number;
     occupancy_start: Date;
     occupancy_end?: Date | null;
-}): Promise<OccupiedSpaces | null> {
+}): Promise<OccupiedSpaceLog | null> {
     try {
         // Insert data using Knex's query builder
         const [insertId] = await db("occupancy_logs")
             .insert({
                 room_id: data.room_id,
-                occupancy_start: data.occupancy_start.toISOString().replace('Z','').replace('T', ' '), // Ensure proper format
-                occupancy_end: data.occupancy_end ? data.occupancy_end.toISOString().replace('Z','').replace('T', ' ') : null,
+                occupancy_start: data.occupancy_start.toISOString().replace('Z', '').replace('T', ' '), // Ensure proper format
+                occupancy_end: data.occupancy_end ? data.occupancy_end.toISOString().replace('Z', '').replace('T', ' ') : null,
                 created_at: db.fn.now(),
                 updated_at: db.fn.now(),
             })
@@ -168,17 +168,17 @@ export async function createOccupiedSpace(db: Knex, data: {
             .where("log_id", insertId)
             .first();
 
-        return insertedRow as OccupiedSpaces | null;
+        return insertedRow as OccupiedSpaceLog | null;
     } catch (error) {
         console.error("Database insertion failed:", error);
         return null;
     }
 }
 
-export async function updateOccupiedSpace(db: Knex, id: number, data:{
+export async function updateOccupiedSpaceLog(db: Knex, id: number, data: {
     occupancy_end?: Date | null;
-}): Promise<OccupiedSpaces | null> {
-    try{
+}): Promise<OccupiedSpaceLog | null> {
+    try {
         const updatedRows = await db("occupancy_logs")
             .where("log_id", id) // Ensure the correct row is being updated
             .update({
@@ -187,7 +187,7 @@ export async function updateOccupiedSpace(db: Knex, id: number, data:{
             });
 
         return updatedRows ? await db("occupancy_logs").where("log_id", id).first() : null;
-    
+
 
     } catch (error) {
         console.error("Database update failed:", error);
@@ -195,7 +195,7 @@ export async function updateOccupiedSpace(db: Knex, id: number, data:{
     }
 }
 
-export async function deleteOccupiedSpace(db: Knex, id: number) {
+export async function deleteOccupiedSpaceLog(db: Knex, id: number) {
     try {
         const deletedOccupied = await db("occupancy_logs")
             .select("*")
@@ -208,8 +208,6 @@ export async function deleteOccupiedSpace(db: Knex, id: number) {
         return { success: false, error: "Failed to delete occupied space" };
     }
 }
-
-
 
 
 // Fetch a buildings hours by its id.
@@ -232,3 +230,34 @@ export async function getAllBuildingHours(db: Knex): Promise<BuildingHours[]> {
 
     return result as BuildingHours[];
 }
+
+// Create one joined table with all the information about a room:
+// room_id, room_name, ..., building_id, building_name, building_hours (for today)
+// export async function getAllRoomsWithBuildingInfo(db: Knex): Promise<any[]> {
+//     const today = new Date().toLocaleString("en-US", { weekday: "long" }); // Get today's day name (e.g., "Monday")
+
+//     const result = await db
+//         .select(
+//             "rooms.room_id",
+//             "rooms.room_name",
+//             "rooms.capacity",
+//             "rooms.distance",
+//             "rooms.whiteboard",
+//             "rooms.tv",
+//             "rooms.room_pic_url",
+//             "rooms.building_map_url",
+//             "rooms.campus_map_url",
+//             "buildings.building_id",
+//             "buildings.building_name",
+//             "building_hours.day_of_the_week",
+//             "building_hours.open_at",
+//             "building_hours.close_at"
+//         )
+//         .from("rooms")
+//         .join("buildings_rooms", "rooms.room_id", "buildings_rooms.room_id")
+//         .join("buildings", "buildings_rooms.building_id", "buildings.building_id")
+//         .join("building_hours", "buildings.building_id", "building_hours.building_id")
+//         .where("building_hours.day_of_the_week", today); // Only include today's building hours
+
+//     return result;
+// }

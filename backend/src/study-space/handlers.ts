@@ -2,7 +2,7 @@
 import type { Express } from 'express';
 import validate from "express-zod-safe";
 import { z } from "zod";
-import { createOccupiedSpace, deleteOccupiedSpace, getAllBuildingHours, getAllBuildingRooms, getAllBuildings, getAllOccupiedSpaces, getAllStudySpaces, getBuildingById, getBuildingHourById, getBuildingRoomById, getOccupiedSpaceById, getStudySpaceById, updateOccupiedSpace } from './db';
+import { createOccupiedSpaceLog, updateOccupiedSpaceLog, deleteOccupiedSpaceLog, getAllBuildingHours, getAllBuildingRooms, getAllBuildings, getAllOccupancyLog, getAllStudySpaces, getBuildingById, getBuildingHourById, getBuildingRoomById, getOccupiedSpaceLogById, getStudySpaceById } from './db';
 
 const IdParamSchema = z.object({
     id: z.coerce.number().int().positive(),
@@ -12,93 +12,95 @@ type IdParam = z.infer<typeof IdParamSchema>;
 
 // Allows the routering to a specific study space based off id or all of them.
 export function studySpaceHandlers(e: Express): void {
-    e.get("/study-spaces/:id", 
+    e.get("/study-spaces/:id",
         validate({
             params: IdParamSchema,
         }),
 
-    async (req, res) => {
-        const u = await getStudySpaceById(req.app.get("db"), req.params.id);
-        res.send(u);
-    });
+        async (req, res) => {
+            const u = await getStudySpaceById(req.app.get("db"), req.params.id);
+            res.send(u);
+        });
 
-    e.get("/study-spaces", 
-        
-    async (req, res) => {
-        const u = await getAllStudySpaces(req.app.get("db"));
+    e.get("/study-spaces",
 
-        res.send(u);
-    })
-    
+        async (req, res) => {
+            const u = await getAllStudySpaces(req.app.get("db"));
+
+            res.send(u);
+        })
+
 }
 
 // Allows the routering to a specific building based off id or all of them.
 export function buildingHandlers(e: Express): void {
-    e.get("/buildings/:id", 
+    e.get("/buildings/:id",
         validate({
             params: IdParamSchema,
         }),
 
-    async (req, res) => {
-        const u = await getBuildingById(req.app.get("db"), req.params.id);
-        res.send(u);
-    });
+        async (req, res) => {
+            const u = await getBuildingById(req.app.get("db"), req.params.id);
+            res.send(u);
+        });
 
-    e.get("/buildings", 
-        
-    async (req, res) => {
-        const u = await getAllBuildings(req.app.get("db"));
+    e.get("/buildings",
 
-        res.send(u);
-    })
+        async (req, res) => {
+            const u = await getAllBuildings(req.app.get("db"));
 
-    
+            res.send(u);
+        })
+
+
 }
 
 // Allows the routering to a specific building room based off id or all of them.
 export function buildingRoomHandlers(e: Express): void {
-    e.get("/building-rooms/:id", 
+    e.get("/building-rooms/:id",
         validate({
             params: IdParamSchema,
         }),
 
-    async (req, res) => {
-        const u = await getBuildingRoomById(req.app.get("db"), req.params.id);
-        res.send(u);
-    });
+        async (req, res) => {
+            const u = await getBuildingRoomById(req.app.get("db"), req.params.id);
+            res.send(u);
+        });
 
-    e.get("/building-rooms", 
-        
-    async (req, res) => {
-        const u = await getAllBuildingRooms(req.app.get("db"));
+    e.get("/building-rooms",
 
-        res.send(u);
-    })
+        async (req, res) => {
+            const u = await getAllBuildingRooms(req.app.get("db"));
 
-    
+            res.send(u);
+        })
+
+
 }
 
-// Allows the routering to a specific occupied spaces based off id or all of them.
-export function occupiedSpacesHandlers(e: Express): void {
-    e.get("/occupancy-log/:id", 
+// Allows the routering to a specific occupied spaces log based off id or all of them.
+export function occupiedSpaceLogHandlers(e: Express): void {
+    e.get("/occupancy-log/:id",
         validate({
             params: IdParamSchema,
         }),
 
-    async (req, res) => {
-        const u = await getOccupiedSpaceById(req.app.get("db"), req.params.id);
-        res.send(u);
-    });
+        async (req, res) => {
+            const u = await getOccupiedSpaceLogById(req.app.get("db"), req.params.id);
+            res.send(u);
+        });
 
-    e.get("/occupancy-log", 
-        
-    async (req, res) => {
-        const u = await getAllOccupiedSpaces(req.app.get("db"));
+    e.get("/occupancy-log",
 
-        res.send(u);
-    })
+        async (req, res) => {
+            const u = await getAllOccupancyLog(req.app.get("db"));
 
-    // POST route to create a new occupied space
+            res.send(u);
+        })
+
+
+
+    // POST route to create a new occupied space log
     e.post("/occupancy-log",
         validate({
             body: z.object({
@@ -111,7 +113,7 @@ export function occupiedSpacesHandlers(e: Express): void {
         async (req, res) => {
             const db = req.app.get("db");
 
-            const newOccupied = await createOccupiedSpace(db, {
+            const newOccupied = await createOccupiedSpaceLog(db, {
                 room_id: req.body.room_id,
                 occupancy_start: new Date(req.body.occupancy_start),
                 occupancy_end: req.body.occupancy_end ? new Date(req.body.occupancy_end) : null,
@@ -133,7 +135,7 @@ export function occupiedSpacesHandlers(e: Express): void {
         async (req, res) => {
             const db = req.app.get("db");
 
-            const udpatedOccupied = await updateOccupiedSpace(db, req.params.id, {
+            const udpatedOccupied = await updateOccupiedSpaceLog(db, req.params.id, {
                 occupancy_end: req.body.occupancy_end ? new Date(req.body.occupancy_end) : null,
             });
 
@@ -142,23 +144,23 @@ export function occupiedSpacesHandlers(e: Express): void {
     );
 
     // DELETE route to remove an occupied space
-    e.delete("/occupancy-log/:id", 
+    e.delete("/occupancy-log/:id",
         validate({
             params: IdParamSchema
         }),
 
         async (req, res) => {
             const db = req.app.get("db");
-        
-            const result = await deleteOccupiedSpace(db, req.params.id);
-        
+
+            const result = await deleteOccupiedSpaceLog(db, req.params.id);
+
             if (result.success) {
                 res.send(result);
             } else {
                 res.status(result.error === "Occupied space not found" ? 404 : 500).send(result);
             }
         }
-    );   
+    );
 
 
 }
@@ -166,23 +168,23 @@ export function occupiedSpacesHandlers(e: Express): void {
 
 // Allows the routering to a specific building hours based off id or all of them.
 export function buildingHoursHandlers(e: Express): void {
-    e.get("/building-hours/:id", 
+    e.get("/building-hours/:id",
         validate({
             params: IdParamSchema,
         }),
 
-    async (req, res) => {
-        const u = await getBuildingHourById(req.app.get("db"), req.params.id);
-        res.send(u);
-    });
+        async (req, res) => {
+            const u = await getBuildingHourById(req.app.get("db"), req.params.id);
+            res.send(u);
+        });
 
-    e.get("/building-hours", 
-        
-    async (req, res) => {
-        const u = await getAllBuildingHours(req.app.get("db"));
+    e.get("/building-hours",
 
-        res.send(u);
-    })
+        async (req, res) => {
+            const u = await getAllBuildingHours(req.app.get("db"));
 
-    
+            res.send(u);
+        })
+
+
 }
