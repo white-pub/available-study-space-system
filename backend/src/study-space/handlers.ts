@@ -123,7 +123,7 @@ export function occupiedSpaceLogHandlers(e: Express): void {
         }
     );
 
-    // UPDATE route to update occupancy_end time in an occupied space
+    // UPDATE route to update occupancy_end time in an occupied space log
     e.put("/occupancy-log/:id",
         validate({
             params: IdParamSchema,
@@ -143,7 +143,7 @@ export function occupiedSpaceLogHandlers(e: Express): void {
         }
     );
 
-    // DELETE route to remove an occupied space
+    // DELETE route to remove an occupied space log entry
     e.delete("/occupancy-log/:id",
         validate({
             params: IdParamSchema
@@ -157,7 +157,7 @@ export function occupiedSpaceLogHandlers(e: Express): void {
             if (result.success) {
                 res.send(result);
             } else {
-                res.status(result.error === "Occupied space not found" ? 404 : 500).send(result);
+                res.status(result.error === "Occupied space log entry not found" ? 404 : 500).send(result);
             }
         }
     );

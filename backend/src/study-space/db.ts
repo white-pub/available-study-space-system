@@ -23,7 +23,7 @@ type Building = {
     updated_at: Date;
 }
 
-// Define a building room
+// Define a building room relation
 type BuildingRoom = {
     building_room_id: number;
     building_id: Building["building_id"];
@@ -32,7 +32,7 @@ type BuildingRoom = {
     updated_at: Date;
 }
 
-// Define occupied spaces
+// Define occupied space log
 type OccupiedSpaceLog = {
     log_id: number;
     room_id: StudySpace["room_id"];
@@ -137,7 +137,7 @@ export async function getOccupiedSpaceLogById(db: Knex, id: number): Promise<Occ
 
 }
 
-// Fetch all occupied spaces for listing.
+// Fetch all occupied space logs for listing.
 export async function getAllOccupancyLog(db: Knex): Promise<OccupiedSpaceLog[]> {
     const result = await db
         .select("*")
@@ -203,9 +203,9 @@ export async function deleteOccupiedSpaceLog(db: Knex, id: number) {
             .first()
             .del();
 
-        return deletedOccupied ? { success: true, message: "Occupied space deleted successfully" } : { success: false, error: "Occupied space not found" };
+        return deletedOccupied ? { success: true, message: "Occupied space log deleted successfully" } : { success: false, error: "Occupied space log not found" };
     } catch (error) {
-        return { success: false, error: "Failed to delete occupied space" };
+        return { success: false, error: "Failed to delete occupied space log" };
     }
 }
 
@@ -233,31 +233,31 @@ export async function getAllBuildingHours(db: Knex): Promise<BuildingHours[]> {
 
 // Create one joined table with all the information about a room:
 // room_id, room_name, ..., building_id, building_name, building_hours (for today)
-// export async function getAllRoomsWithBuildingInfo(db: Knex): Promise<any[]> {
-//     const today = new Date().toLocaleString("en-US", { weekday: "long" }); // Get today's day name (e.g., "Monday")
+export async function getAllRoomsWithBuildingInfo(db: Knex): Promise<any[]> {
+    const today = new Date().toLocaleString("en-US", { weekday: "long" }); // Get today's day name (e.g., "Monday")
 
-//     const result = await db
-//         .select(
-//             "rooms.room_id",
-//             "rooms.room_name",
-//             "rooms.capacity",
-//             "rooms.distance",
-//             "rooms.whiteboard",
-//             "rooms.tv",
-//             "rooms.room_pic_url",
-//             "rooms.building_map_url",
-//             "rooms.campus_map_url",
-//             "buildings.building_id",
-//             "buildings.building_name",
-//             "building_hours.day_of_the_week",
-//             "building_hours.open_at",
-//             "building_hours.close_at"
-//         )
-//         .from("rooms")
-//         .join("buildings_rooms", "rooms.room_id", "buildings_rooms.room_id")
-//         .join("buildings", "buildings_rooms.building_id", "buildings.building_id")
-//         .join("building_hours", "buildings.building_id", "building_hours.building_id")
-//         .where("building_hours.day_of_the_week", today); // Only include today's building hours
+    const result = await db
+        .select(
+            "rooms.room_id",
+            "rooms.room_name",
+            "rooms.capacity",
+            "rooms.distance",
+            "rooms.whiteboard",
+            "rooms.tv",
+            "rooms.room_pic_url",
+            "rooms.building_map_url",
+            "rooms.campus_map_url",
+            "buildings.building_id",
+            "buildings.building_name",
+            "building_hours.day_of_the_week",
+            "building_hours.open_at",
+            "building_hours.close_at"
+        )
+        .from("rooms")
+        .join("buildings_rooms", "rooms.room_id", "buildings_rooms.room_id")
+        .join("buildings", "buildings_rooms.building_id", "buildings.building_id")
+        .join("building_hours", "buildings.building_id", "building_hours.building_id")
+        .where("building_hours.day_of_the_week", today); // Only include today's building hours
 
-//     return result;
-// }
+    return result;
+}
