@@ -4,6 +4,7 @@ import LeftSidebar from '../layout/LeftSidebar';
 import RightSidebar from '../layout/RightSidebar';
 import HeaderSection from '../layout/HeaderSection';
 import DropdownSection from '../dropdown/DropdownSection';
+import RoomListPage from "./components/RoomListPage/roomListPage";
 
 
 const RoomPage: React.FC = () => {
@@ -23,6 +24,10 @@ const RoomPage: React.FC = () => {
             </div>
             
             <div className="col-md-3"><RightSidebar /></div>
+          </div>
+          {/* Test room List page data fetching */}
+          <div className="row" style={{backgroundColor: '#abdbe3'}}>
+            <RoomListPage />
           </div>
         </div>
       </div>
