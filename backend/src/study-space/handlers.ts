@@ -2,7 +2,11 @@
 import type { Express } from 'express';
 import validate from "express-zod-safe";
 import { z } from "zod";
-import { createOccupiedSpaceLog, updateOccupiedSpaceLog, deleteOccupiedSpaceLog, getAllBuildingHours, getAllBuildingRooms, getAllBuildings, getAllOccupancyLog, getAllStudySpaces, getBuildingById, getBuildingHourById, getBuildingRoomById, getOccupiedSpaceLogById, getStudySpaceById, getAllRoomsWithBuildingInfo } from './db';
+import { createOccupiedSpaceLog, updateOccupiedSpaceLog, deleteOccupiedSpaceLog, getAllBuildingHours, getAllBuildingRooms, getAllBuildings, getAllOccupancyLog, getAllStudySpaces, getBuildingById, getBuildingHourById, getBuildingRoomById, getOccupiedSpaceLogById, getStudySpaceById, getAllRoomsWithBuildingInfo, getOccupiedRooms } from './db';
+import { EventEmitter } from "events"; // for SSE and real-time update on occupied rooms
+
+const occupancyLogEvents = new EventEmitter(); // Event emitter for occupancy log changes
+
 
 const IdParamSchema = z.object({
     id: z.coerce.number().int().positive(),
@@ -112,15 +116,33 @@ export function occupiedSpaceLogHandlers(e: Express): void {
         async (req, res) => {
             const db = req.app.get("db");
 
-            const newOccupied = await createOccupiedSpaceLog(db, {
-                room_id: req.body.room_id,
-                occupancy_start: new Date(req.body.occupancy_start),
-                occupancy_end: req.body.occupancy_end ? new Date(req.body.occupancy_end) : null,
-            });
 
-            res.send(newOccupied);
+            try {
+                // Create the new occupancy log entry
+                const newOccupied = await createOccupiedSpaceLog(db, {
+                    room_id: req.body.room_id,
+                    occupancy_start: new Date(req.body.occupancy_start),
+                    occupancy_end: req.body.occupancy_end ? new Date(req.body.occupancy_end) : null,
+                });
+
+                if (!newOccupied) { // handle error if creating log failed
+                    res.status(500).send({ error: "Failed to create occupancy log entry." });
+                    return;
+                }
+
+                // Emit event and send success response
+                occupancyLogEvents.emit("logChanged", db);
+                res.status(201).send(newOccupied);
+
+            } catch (error) { // catch other errors
+                console.error("Error creating occupancy log:", error);
+                res.status(500).send({ error: "Internal server error while processing occupancy log." });
+            }
+
         }
     );
+
+
 
     // UPDATE route to update occupancy_end time in an occupied space log
     e.put("/occupancy-log/:id",
@@ -134,11 +156,24 @@ export function occupiedSpaceLogHandlers(e: Express): void {
         async (req, res) => {
             const db = req.app.get("db");
 
-            const udpatedOccupied = await updateOccupiedSpaceLog(db, req.params.id, {
-                occupancy_end: req.body.occupancy_end ? new Date(req.body.occupancy_end) : null,
-            });
+            try {
+                const updatedOccupied = await updateOccupiedSpaceLog(db, req.params.id, {
+                    occupancy_end: req.body.occupancy_end ? new Date(req.body.occupancy_end) : null,
+                });
 
-            res.send(udpatedOccupied);
+                if (!updatedOccupied) { // handle error if updating log failed
+                    res.status(500).send({ error: "Failed to update occupancy log entry." });
+                    return;
+                }
+
+                // Emit event and send success response
+                occupancyLogEvents.emit("logChanged", db);
+                res.status(201).send(updatedOccupied);
+
+            } catch (error) { // catch other errors
+                console.error("Error updating occupancy log:", error);
+                res.status(500).send({ error: "Internal server error while updating occupancy log." });
+            }
         }
     );
 
@@ -154,6 +189,7 @@ export function occupiedSpaceLogHandlers(e: Express): void {
             const result = await deleteOccupiedSpaceLog(db, req.params.id);
 
             if (result.success) {
+                occupancyLogEvents.emit("logChanged", db); // Emit event to SSE
                 res.send(result);
             } else {
                 res.status(result.error === "Occupied space log entry not found" ? 404 : 500).send(result);
@@ -205,4 +241,42 @@ export function allRoomWithBuildingInfoHandlers(e: Express): void {
             }
         }
     );
+}
+
+// Implement Server-Sent Events (SSE) to sent the newest occupied room list
+// Only sent out dta when occupancy_log is changed by occupiedSpaceLogHandlers
+const sseClients: any[] = []; // Store active SSE connections
+
+export function occupiedRoomsSSEHandler(e: Express): void {
+    e.get("/occupied-rooms-stream", (req, res) => {
+        res.setHeader("Content-Type", "text/event-stream");
+        res.setHeader("Cache-Control", "no-cache");
+        res.setHeader("Connection", "keep-alive");
+
+        // Add the client to the list of SSE connections
+        sseClients.push(res);
+
+        // Remove the client when the connection is closed
+        req.on("close", () => {
+            const index = sseClients.indexOf(res);
+            if (index !== -1) {
+                sseClients.splice(index, 1);
+            }
+        });
+    });
+
+    // Listen for occupancy log changes
+    occupancyLogEvents.on("logChanged", async (db) => {
+        try {
+            // Fetch the updated list of occupied rooms
+            const occupiedRooms = await getOccupiedRooms(db);
+
+            // Send updates to all SSE clients
+            sseClients.forEach((client) => {
+                client.write(`data: ${JSON.stringify(occupiedRooms)}\n\n`);
+            });
+        } catch (error) {
+            console.error("Error fetching occupied rooms:", error);
+        }
+    });
 }

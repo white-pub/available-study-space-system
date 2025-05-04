@@ -263,3 +263,15 @@ export async function getAllRoomsWithBuildingInfo(db: Knex): Promise<any[]> {
 
     return roomsWithBuildingInfo;
 }
+
+// get all room_id for currently occupied rooms
+export async function getOccupiedRooms(db: Knex): Promise<any[]> {
+    const occupiedRooms = await db
+        .select(
+            "occupancy_logs.room_id",
+        )
+        .from("occupancy_logs")
+        .whereNull("occupancy_logs.occupancy_end"); // Only include currently occupied rooms
+
+    return occupiedRooms;
+}

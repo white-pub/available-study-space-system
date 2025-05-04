@@ -4,6 +4,7 @@ import LeftSidebar from './components/layout/LeftSidebar';
 import RightSidebar from './components/layout/RightSidebar';
 import HeaderSection from './components/layout/HeaderSection';
 import DropdownSection from './components/dropdown/DropdownSection';
+import RoomListPage from "./components/RoomListPage/roomListPage";
 
 
 const App: React.FC = () => {
@@ -24,6 +25,7 @@ const App: React.FC = () => {
             
             <div className="col-md-3"><RightSidebar /></div>
           </div>
+
         </div>
       </div>
     </MantineProvider>
