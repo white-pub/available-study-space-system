@@ -248,10 +248,20 @@ export function allRoomWithBuildingInfoHandlers(e: Express): void {
 const sseClients: any[] = []; // Store active SSE connections
 
 export function occupiedRoomsSSEHandler(e: Express): void {
-    e.get("/occupied-rooms-stream", (req, res) => {
+    e.get("/occupied-rooms-stream", async (req, res) => {
         res.setHeader("Content-Type", "text/event-stream");
         res.setHeader("Cache-Control", "no-cache");
         res.setHeader("Connection", "keep-alive");
+
+        // Perform an initial query for occupied rooms
+        try {
+            const db = req.app.get("db"); // Access the database connection
+            const occupiedRooms = await getOccupiedRooms(db); // Query the current state of occupied rooms
+            res.write(`data: ${JSON.stringify(occupiedRooms)}\n\n`); // Send the initial data to the client
+        } catch (error) {
+            console.error("Error fetching initial occupied rooms:", error);
+            res.write(`data: ${JSON.stringify({ error: "Failed to fetch initial occupied rooms" })}\n\n`);
+        }
 
         // Add the client to the list of SSE connections
         sseClients.push(res);
