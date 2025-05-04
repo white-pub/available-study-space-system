@@ -1,4 +1,4 @@
-// frontend/src/components/RoomListPage/roomListPage.tsx
+// frontend/src/components/RoomListPage/RoomListPage.tsx
 // Updated: 2025-5-3
 // 
 // Fetch the occupied room data in real time using SSE.
