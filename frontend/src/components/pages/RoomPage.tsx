@@ -4,7 +4,7 @@ import LeftSidebar from '../layout/LeftSidebar';
 import RightSidebar from '../layout/RightSidebar';
 import HeaderSection from '../layout/HeaderSection';
 import DropdownSection from '../dropdown/DropdownSection';
-import RoomListPage from "./components/RoomListPage/roomListPage";
+import RoomListPage from "../RoomListPage/roomListPage";
 
 
 const RoomPage: React.FC = () => {
