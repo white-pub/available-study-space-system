@@ -1,68 +1,46 @@
-import React, { useState } from 'react';
-import { MantineTheme, Burger, Checkbox } from '@mantine/core';
+import React from 'react';
+import { Burger, Checkbox } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import '@mantine/core/styles.css';
 
 const LeftSidebar: React.FC = () => {
-  const [expanded, { toggle }] = useDisclosure(true);
+  const [opened, { toggle }] = useDisclosure();
   const options = ['Empty Rooms', 'Occupied Rooms', '2-5', '5-10','10+', 'Whiteboard', 'TV', 'Dunklau', 'Thom', 'Library', 'Janzow'];
-  const [checkedItems, setCheckedItems] = useState(new Array(options.length).fill(false));
 
-  const handleCheckboxChange = (index: number) => {
-    const updatedItems = [...checkedItems];
-    updatedItems[index] = !updatedItems[index];
-    setCheckedItems(updatedItems);
-  };
 
   return (
-    <div style={{ backgroundColor: '#D3D3D3', borderRadius: '8px', padding: '10px', width: '280px' }}>
+    <div style={{
+      backgroundColor: '#D3D3D3',
+      borderRadius: '8px',
+      padding: '10px',
+      width: opened ? '280px' : '50px', // Expands sideways, starts as a small box
+      height: opened ? 'auto' : '50px', // Remains a small square when closed
+      overflow: 'hidden',
+      transition: 'width 0.5s ease, height 0.5s ease', // Smooth animations
+      display: "grid", // Displays in nice columns
+      marginBottom: "10px"
+      }}>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <Burger
-          opened={expanded}
+          opened={opened}
           onClick={toggle}
-          
-          size={30}
-          color="#ff4500"
-          style={(theme: MantineTheme) => ({
-            border: '1px solid #000',
-            borderRadius: '4px',
-            padding: '4px',
-            '& div': {
-              backgroundColor: expanded ? theme.colors.green[6] : theme.colors.red[6],
-            },
-          })}
+          size={20}
         />
-        <span style={{ marginLeft: '25px', whiteSpace: 'nowrap' }}>Menu</span>
+        <span style={{ marginLeft: '10px' }}>Menu</span>
       </div>
       <div
         style={{
-          marginTop: '10px',
-          maxHeight: expanded ? '630px' : '0px',
-          overflow: 'hidden',
-          transition: 'max-height 0.5s ease',
-        }}
-      >
+          marginLeft: '10px', // Adjust spacing
+          maxWidth: opened ? '280px' : '0px', // Expands horizontally instead of vertically
+          overflow: 'hidden', // Prevent content from spilling out when closed
+          whiteSpace: 'nowrap', // Prevent text from wrapping
+          transition: 'max-width 0.5s ease', // Smooth sliding animation
+        }}>
+          
         {options.map((option, index) => (
           <Checkbox
             key={index}
             label={option}
-            variant="outline"
-            checked={checkedItems[index]}
-            onChange={() => handleCheckboxChange(index)}
-            style={{ marginBottom: '10px' }}
-            // Using Mantine's color prop to change the primary color
-            color="teal"
-            // Customize inner styles via the styles prop
-            styles={{
-              icon: { display: 'none' }, // Hides the default check icon
-              label: { fontSize: '16px', color: '#333', marginLeft: '8px' },
-              input: {
-                // Here you can override the default checkbox appearance
-                borderColor: checkedItems[index] ? 'teal' : '#ccc',
-                '&:checked': {
-                  backgroundColor: 'teal',
-                },
-              },
-            }}
           />
         ))}
       </div>

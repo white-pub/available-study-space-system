@@ -13,12 +13,15 @@ const App: React.FC = () => {
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-3"><LeftSidebar /></div>
+
+            {/* CUNE Study Spaces div */}
             <div className="col-md-6">
               <div style={{ backgroundColor: '#D3D3D3', borderRadius: '8px', padding: '20px', marginBottom: '20px' }}>
                 <HeaderSection />
                 <DropdownSection />
               </div>
             </div>
+            
             <div className="col-md-3"><RightSidebar /></div>
           </div>
         </div>
