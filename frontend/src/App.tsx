@@ -25,6 +25,10 @@ const App: React.FC = () => {
             
             <div className="col-md-3"><RightSidebar /></div>
           </div>
+          {/* Test room List page data fetching */}
+          <div className="row" style={{backgroundColor: '#abdbe3'}}>
+            <RoomListPage />
+          </div>
 
         </div>
       </div>
