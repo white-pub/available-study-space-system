@@ -26,8 +26,9 @@ const HomePage: React.FC = () => {
                     <Text size="lg" fw={700}>ABOUT</Text>
                     <Text>Find available study rooms on campus wth ease!</Text>
                     <Text>
-                        Simply search by building and room number or scan the QR code outside any study room to 
-                        see availablity and nearby options. 
+                        Simply choose your filter options to see availablity and nearby options.
+                        Whether you want a space in a specific room or with specific materials inside,
+                        the filter can do the work for you!
                     </Text>
                 </div>
 
@@ -45,10 +46,9 @@ const HomePage: React.FC = () => {
                         justifyContent: 'flex-start', // Ensures items start at the top
                     }}>
                     <Text size="lg" fw={700}>HOW TO FIND A STUDY SPACE</Text>
-                    <Text>Searching by Building or Room Number:</Text>
                     <List type="ordered">
-                        <List.Item>Enter the building name or room number in the search field.</List.Item>
-                        <List.Item>Press Search!</List.Item>
+                        <List.Item>Navigate to the rooms page.</List.Item>
+                        <List.Item>Use the filter to find your favorite study space!</List.Item>
                     </List>
                 </div>
 

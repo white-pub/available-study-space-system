@@ -1,6 +1,5 @@
 import React from 'react';
 import { Accordion, Image, Group, Text, Anchor } from '@mantine/core';
-import { useRoomData } from '../functions/FetchRoomData';
 import thomImage from '../../assets/thom_image_placeholder.jpeg'
 
 interface StudySpacesBlockProps {
