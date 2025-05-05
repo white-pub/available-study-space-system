@@ -3,8 +3,12 @@ import { Accordion, Image, Group, Text, Anchor } from '@mantine/core';
 import { useRoomData } from '../functions/FetchRoomData';
 import thomImage from '../../assets/thom_image_placeholder.jpeg'
 
-function StudySpacesBlock() {
-  const { filteredRooms } = useRoomData();
+interface StudySpacesBlockProps {
+  filteredRooms: Room[];
+}
+
+const StudySpacesBlock: React.FC<StudySpacesBlockProps> = ({ filteredRooms }) => {
+  
   
   // Generate accordion items with room details
   const Rooms = filteredRooms.map((room) => (
