@@ -1,5 +1,6 @@
 import React from 'react';
-import { Accordion, Image, Group, Text, Anchor } from '@mantine/core';
+import { Link } from "react-router-dom";
+import { Accordion, Image, Group, Text, Anchor, Button } from '@mantine/core';
 import thomImage from '../../assets/thom_image_placeholder.jpeg'
 
 interface StudySpacesBlockProps {
@@ -31,14 +32,14 @@ const StudySpacesBlock: React.FC<StudySpacesBlockProps> = ({ filteredRooms }) =>
         </Group>
         <Group mt="md">
           {room.building_map_url && (
-            <Anchor href={room.building_map_url} target="_blank">
+            <Button component={Link} to={room.building_map_url} variant="light" color="rgba(17, 112, 237, 1)">
               📍 Building Map
-            </Anchor>
+            </Button>
           )}
           {room.campus_map_url && (
-            <Anchor href={room.campus_map_url} target="_blank">
+            <Button component={Link} to={room.building_map_url} variant="light" color="rgba(17, 112, 237, 1)">
               🏫 Campus Map
-            </Anchor>
+            </Button>
           )}
         </Group>
       </Accordion.Panel>
