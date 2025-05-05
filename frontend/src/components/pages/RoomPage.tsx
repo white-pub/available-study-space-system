@@ -3,7 +3,7 @@ import { MantineProvider } from '@mantine/core';
 import RoomFilter from '../functions/RoomFilter';
 import SearchBar from '../functions/SearchBar';
 import HeaderSection from '../layout/HeaderSection';
-import RoomListPage from "../RoomListPage/RoomListPage";
+import FetchRoomData from "../functions/FetchRoomData";
 
 
 const RoomPage: React.FC = () => {
@@ -25,7 +25,7 @@ const RoomPage: React.FC = () => {
           </div>
           {/* Test room List page data fetching */}
           <div className="row" style={{backgroundColor: '#abdbe3'}}>
-            <RoomListPage />
+            <FetchRoomData />
           </div>
         </div>
       </div>

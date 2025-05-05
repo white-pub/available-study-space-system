@@ -1,4 +1,4 @@
-// frontend/src/components/RoomListPage/RoomListPage.tsx
+// frontend/src/components/RoomListPage/FetchRoomData.tsx
 // Updated: 2025-5-3
 // 
 // Fetch the occupied room data in real time using SSE.
@@ -6,11 +6,11 @@
 // Pass the data down to child components (e.g., list, map, filters).
 
 import React, { useState, useEffect } from "react";
-import RoomList from "./RoomList";
-import RoomFilter from "../functions/RoomFilter"; // to link the filter function
+import RoomList from "../RoomListPage/RoomList";
+import RoomFilter from "./RoomFilter"; // to link the filter function
 // import RoomFilters from "./RoomFilter";
 
-function RoomListPage() {
+function FetchRoomData() {
     interface Room {
         room_id: string; // Unique identifier for the room
         room_name?: string; // Name of the room
@@ -106,4 +106,4 @@ function RoomListPage() {
     );
 }
 
-export default RoomListPage;
+export default FetchRoomData;
