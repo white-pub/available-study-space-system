@@ -11,10 +11,9 @@ interface RoomFilterProps {
   filteredRooms?: any[]; // Add this line to define filteredRooms (adjust the type as needed)
 }
 
-const RoomFilter: React.FC<RoomFilterProps> = ({ filters, setFilters, filteredRooms}) => {
+const RoomFilter: React.FC<RoomFilterProps> = ({filters, setFilters}) => {
   const [opened, { toggle }] = useDisclosure();
-  // const options = ['Empty Rooms', 'Occupied Rooms', '2-5', '5-10','10+', 'Whiteboard', 'TV', 'Dunklau', 'Thom', 'Library', 'Janzow'];
-  const options = ['Empty Rooms', 'Occupied Rooms', 'Link Library'];
+  const options = ['Empty Rooms', 'Occupied Rooms', '2 people or less', '3 to 5 people', '6 people or more', 'Whiteboard', 'TV', 'Dunklau', 'Link Library', 'Janzow'];
 
   // console.log("159");
   // console.log("RoomFilter Props:", { filters, setFilters });
@@ -33,12 +32,14 @@ const RoomFilter: React.FC<RoomFilterProps> = ({ filters, setFilters, filteredRo
       backgroundColor: '#D3D3D3',
       borderRadius: '8px',
       padding: '10px',
-      width: opened ? '280px' : '50px', // Expands sideways, starts as a small box
+      // width: opened ? '280px' : '50px', // Expands sideways, starts as a small box
+      width: opened ? 'auto' : '50px', // Expands sideways, starts as a small box
       height: opened ? 'auto' : '50px', // Remains a small square when closed
       overflow: 'hidden',
       transition: 'width 0.5s ease, height 0.5s ease', // Smooth animations
       display: "grid", // Displays in nice columns
-      marginBottom: "10px"
+      marginBottom: "10px",
+      paddingRight: '10px',
     }}>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <Burger
@@ -46,12 +47,12 @@ const RoomFilter: React.FC<RoomFilterProps> = ({ filters, setFilters, filteredRo
           onClick={toggle}
           size={20}
         />
-        <span style={{ marginLeft: '10px' }}>Filter</span>
+        <span style={{marginLeft: '10px', fontWeight: 'bold'}}>Filter</span>
       </div>
       <div
         style={{
-          marginLeft: '10px', // Adjust spacing
-          maxWidth: opened ? '280px' : '0px', // Expands horizontally instead of vertically
+          marginLeft: '5px', // Adjust spacing
+          maxWidth: opened ? '100%' : '0px', // Expands horizontally instead of vertically
           overflow: 'hidden', // Prevent content from spilling out when closed
           whiteSpace: 'nowrap', // Prevent text from wrapping
           transition: 'max-width 0.5s ease', // Smooth sliding animation
@@ -65,17 +66,6 @@ const RoomFilter: React.FC<RoomFilterProps> = ({ filters, setFilters, filteredRo
             onChange={(event) => handleCheckboxChange(option, event.currentTarget.checked)}
           />
         ))}
-      </div>
-      <div>
-        <ul>
-          {filteredRooms.map((room) => {
-            return (
-              <li key={room.room_id}>
-                {room.building_name} - {room.room_name}
-              </li>
-            );
-          })}
-        </ul>
       </div>
     </div>
   );

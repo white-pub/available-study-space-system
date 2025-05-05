@@ -89,8 +89,15 @@ export function useRoomData() {
         return joinedOccupiedRooms.filter((room) => {
             if (filters.includes("Empty Rooms") && room.is_occupied) return false;
             if (filters.includes("Occupied Rooms") && !room.is_occupied) return false;
-            // if (filters.includes("TV") && !room.tv) return false;
+            if (filters.includes("2 people or less") && room.capacity > 2) return false;
+            if (filters.includes("3 to 5 people") && room.capacity <= 2) return false;
+            if (filters.includes("3 to 5 people") && room.capacity > 5) return false;
+            if (filters.includes("6 people or more") && room.capacity < 6) return false;
+            if (filters.includes("TV") && room.tv === 0) return false;
+            if (filters.includes("Whiteboard") && room.whiteboard ===0) return false;
+            if (filters.includes("Dunklau") && room.building_name !== "Dunklau") return false;
             if (filters.includes("Link Library") && room.building_name !== "Link Library") return false;
+            if (filters.includes("Janzow") && room.building_name !== "Janzow") return false;
             return true;
         });
     }, [filters, joinedOccupiedRooms]);
