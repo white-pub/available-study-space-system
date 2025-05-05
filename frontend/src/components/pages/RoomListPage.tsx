@@ -22,7 +22,7 @@ const RoomListPage: React.FC = () => {
             {/* CUNE Study Spaces div */}
             <div className="col-md-6">
               <div style={{ backgroundColor: '#D3D3D3', borderRadius: '8px', padding: '20px', marginBottom: '20px' }}>
-                <StudySpacesBlock />
+                <StudySpacesBlock filteredRooms={filteredRooms}/>
               </div>
             </div>
             
