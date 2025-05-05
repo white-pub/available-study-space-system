@@ -1,39 +1,39 @@
-// frontend/src/components/RoomListPage/FetchRoomData.tsx
+// frontend/src/components/functions/FetchRoomData.tsx
 // Updated: 2025-5-3
 // 
 // Fetch the occupied room data in real time using SSE.
 // Fetch static data: that has all rooms with building info
 // Pass the data down to child components (e.g., list, map, filters).
 
-import React, { useState, useEffect } from "react";
-import RoomList from "../RoomListPage/RoomList";
-import RoomFilter from "./RoomFilter"; // to link the filter function
-// import RoomFilters from "./RoomFilter";
+import { useState, useEffect, useMemo } from "react";
 
-function FetchRoomData() {
-    interface Room {
-        room_id: string; // Unique identifier for the room
-        room_name?: string; // Name of the room
-        capacity?: number; // Capacity of the room. 3 means can have 3 people inside
-        whiteboard?: number; // number of whiteboards in room
-        tv?: number; // number of TV in a room
-        room_pic_url?: string; // url for room pic
-        building_map_url?: string; // url for building map with room location marked out
-        campus_map_url?: string; // url for campus map with room location marked out
 
-        building_id?: string; // ID of the building the room belongs to
-        building_name?: string; // Name of the building
 
-        is_occupied?: boolean; // Indicates if the room is occupied
+interface Room {
+    room_id: string; // Unique identifier for the room
+    room_name?: string; // Name of the room
+    capacity?: number; // Capacity of the room. 3 means can have 3 people inside
+    whiteboard?: number; // number of whiteboards in room
+    tv?: number; // number of TV in a room
+    room_pic_url?: string; // url for room pic
+    building_map_url?: string; // url for building map with room location marked out
+    campus_map_url?: string; // url for campus map with room location marked out
 
-        [key: string]: any; // Add other properties as needed
-    }
+    building_id?: string; // ID of the building the room belongs to
+    building_name?: string; // Name of the building
 
+    is_occupied?: boolean; // Indicates if the room is occupied
+
+    [key: string]: any; // Add other properties as needed
+}
+
+export function useRoomData() {
     const [occupiedRooms, setOccupiedRooms] = useState<Room[]>([]);
     const [staticRoomData, setStaticRoomData] = useState<Room[]>([]);
     const [joinedOccupiedRooms, setJoinedOccupiedRooms] = useState<Room[]>([]);
-    const [filters, setFilters] = useState<string[]>([]); // Track selected filters
-    
+    const [filters, setFilters] = useState<string[]>([]);
+
+
     // Fetch static room data (one-time fetch)
     useEffect(() => {
         const fetchStaticRoomData = async () => {
@@ -47,12 +47,10 @@ function FetchRoomData() {
             } catch (error) {
                 console.error("Error fetching static room data:", error);
             }
-
         };
 
         fetchStaticRoomData();
     }, []);
-
 
     // Fetch occupied room data using SSE
     useEffect(() => {
@@ -71,7 +69,7 @@ function FetchRoomData() {
         return () => eventSource.close(); // Cleanup on unmount
     }, []);
 
-    // Join the data
+    // Join the data from to have all room info + occupancy info
     useEffect(() => {
         const updatedJoinedRooms = staticRoomData.map((room) => {
             const isOccupied = occupiedRooms.some(
@@ -87,23 +85,15 @@ function FetchRoomData() {
     }, [staticRoomData, occupiedRooms]); // Re-run whenever staticRoomData or occupiedRooms changes
 
     // Filter the rooms based on the selected filters
-    const rooms = joinedOccupiedRooms; // Use joinedOccupiedRooms as the list of rooms
-    
-    const filteredRooms = rooms.filter((room) => {
-        // Example filter logic
-        if (filters.includes("Empty Rooms") && room.is_occupied) return false;
-        if (filters.includes("Occupied Rooms") && !room.is_occupied) return false;
-        if (filters.includes("TV") && !room.tv) return false; // Corrected property name to 'tv'
-        if (filters.includes("Library") && room.building_name !== "Library") return false;
-        return true;
-    });
+    const filteredRooms = useMemo(() => {
+        return joinedOccupiedRooms.filter((room) => {
+            if (filters.includes("Empty Rooms") && room.is_occupied) return false;
+            if (filters.includes("Occupied Rooms") && !room.is_occupied) return false;
+            // if (filters.includes("TV") && !room.tv) return false;
+            if (filters.includes("Link Library") && room.building_name !== "Link Library") return false;
+            return true;
+        });
+    }, [filters, joinedOccupiedRooms]);
 
-    return (
-        <div>
-            {/* <RoomFilters staticRoomData={staticRoomData} occupiedRooms={occupiedRooms} /> */}
-            <RoomList staticRoomData={staticRoomData} occupiedRooms={occupiedRooms} joinedOccupiedRooms={joinedOccupiedRooms}/>
-        </div>
-    );
+    return { filteredRooms, filters, setFilters, staticRoomData, occupiedRooms, joinedOccupiedRooms };
 }
-
-export default FetchRoomData;

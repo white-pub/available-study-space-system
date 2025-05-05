@@ -1,18 +1,23 @@
 import React from 'react';
 import { MantineProvider } from '@mantine/core';
-import RoomFilter from '../functions/RoomFilter';
-import SearchBar from '../functions/SearchBar';
+import RoomFilter from '../layout/RoomFilter';
+import SearchBar from '../layout/SearchBar';
 import HeaderSection from '../layout/HeaderSection';
-import FetchRoomData from "../functions/FetchRoomData";
+import {useRoomData} from "../functions/FetchRoomData";
+import RoomList from "../RoomListPage/RoomList";
 
 
-const RoomPage: React.FC = () => {
+const RoomListPage: React.FC = () => {
+  const { filteredRooms, filters, setFilters, staticRoomData, occupiedRooms, joinedOccupiedRooms } = useRoomData(); // Get joinedOccupiedRooms from the hook
+
   return (
     <MantineProvider>
       <div style={{ backgroundColor: '#0b1b42', minHeight: '100vh', padding: '20px' }}>
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-3"><RoomFilter /></div>
+            <div className="col-md-3">
+              <RoomFilter filters={filters} setFilters={setFilters} filteredRooms={filteredRooms} />
+            </div>
 
             {/* CUNE Study Spaces div */}
             <div className="col-md-6">
@@ -25,7 +30,7 @@ const RoomPage: React.FC = () => {
           </div>
           {/* Test room List page data fetching */}
           <div className="row" style={{backgroundColor: '#abdbe3'}}>
-            <FetchRoomData />
+            <RoomList staticRoomData={staticRoomData} occupiedRooms={occupiedRooms} joinedOccupiedRooms={joinedOccupiedRooms} />
           </div>
         </div>
       </div>
@@ -33,4 +38,4 @@ const RoomPage: React.FC = () => {
   );
 };
 
-export default RoomPage;
+export default RoomListPage;

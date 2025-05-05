@@ -1,11 +1,31 @@
+// 
+
 import React from 'react';
 import { Burger, Checkbox } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import '@mantine/core/styles.css';
 
-const RoomFilter: React.FC = () => {
+interface RoomFilterProps {
+  filters: string[];
+  setFilters: React.Dispatch<React.SetStateAction<string[]>>;
+  filteredRooms?: any[]; // Add this line to define filteredRooms (adjust the type as needed)
+}
+
+const RoomFilter: React.FC<RoomFilterProps> = ({ filters, setFilters, filteredRooms}) => {
   const [opened, { toggle }] = useDisclosure();
-  const options = ['Empty Rooms', 'Occupied Rooms', '2-5', '5-10','10+', 'Whiteboard', 'TV', 'Dunklau', 'Thom', 'Library', 'Janzow'];
+  // const options = ['Empty Rooms', 'Occupied Rooms', '2-5', '5-10','10+', 'Whiteboard', 'TV', 'Dunklau', 'Thom', 'Library', 'Janzow'];
+  const options = ['Empty Rooms', 'Occupied Rooms', 'Link Library'];
+
+  // console.log("159");
+  // console.log("RoomFilter Props:", { filters, setFilters });
+
+  const handleCheckboxChange = (option: string, checked: boolean) => {
+    if (checked) {
+      setFilters((prev) => [...prev, option]); // Add the filter
+    } else {
+      setFilters((prev) => prev.filter((filter) => filter !== option)); // Remove the filter
+    }
+  };
 
 
   return (
@@ -19,7 +39,7 @@ const RoomFilter: React.FC = () => {
       transition: 'width 0.5s ease, height 0.5s ease', // Smooth animations
       display: "grid", // Displays in nice columns
       marginBottom: "10px"
-      }}>
+    }}>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <Burger
           opened={opened}
@@ -36,13 +56,26 @@ const RoomFilter: React.FC = () => {
           whiteSpace: 'nowrap', // Prevent text from wrapping
           transition: 'max-width 0.5s ease', // Smooth sliding animation
         }}>
-          
+
         {options.map((option, index) => (
           <Checkbox
             key={index}
             label={option}
+            checked={filters.includes(option)} // Check if the filter is selected
+            onChange={(event) => handleCheckboxChange(option, event.currentTarget.checked)}
           />
         ))}
+      </div>
+      <div>
+        <ul>
+          {filteredRooms.map((room) => {
+            return (
+              <li key={room.room_id}>
+                {room.building_name} - {room.room_name}
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </div>
   );
