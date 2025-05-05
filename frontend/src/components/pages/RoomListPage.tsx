@@ -2,9 +2,9 @@ import React from 'react';
 import { MantineProvider } from '@mantine/core';
 import RoomFilter from '../layout/RoomFilter';
 import SearchBar from '../layout/SearchBar';
-import HeaderSection from '../layout/HeaderSection';
 import {useRoomData} from "../functions/FetchRoomData";
 import RoomList from "../RoomListPage/RoomList";
+import StudySpacesBlock from '../layout/StudySpacesBlock';
 
 
 const RoomListPage: React.FC = () => {
@@ -22,7 +22,7 @@ const RoomListPage: React.FC = () => {
             {/* CUNE Study Spaces div */}
             <div className="col-md-6">
               <div style={{ backgroundColor: '#D3D3D3', borderRadius: '8px', padding: '20px', marginBottom: '20px' }}>
-                <HeaderSection />
+                <StudySpacesBlock />
               </div>
             </div>
             

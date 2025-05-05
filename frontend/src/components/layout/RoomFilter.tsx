@@ -46,7 +46,7 @@ const RoomFilter: React.FC<RoomFilterProps> = ({ filters, setFilters, filteredRo
           onClick={toggle}
           size={20}
         />
-        <span style={{ marginLeft: '10px' }}>Menu</span>
+        <span style={{ marginLeft: '10px' }}>Filter</span>
       </div>
       <div
         style={{

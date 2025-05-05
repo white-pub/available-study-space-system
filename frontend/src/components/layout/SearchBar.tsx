@@ -12,7 +12,7 @@ const SearchBar: React.FC = () => {
     <div style={{ backgroundColor: '#D3D3D3', 
     borderRadius: '10px', 
     padding: '10px',
-    height: '680px',
+    height: '110px',
      }}>
       <TextInput placeholder="Search" 
         style={{ marginBottom: '10px',
