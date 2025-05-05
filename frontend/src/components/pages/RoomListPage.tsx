@@ -3,6 +3,7 @@ import { MantineProvider } from '@mantine/core';
 import RoomFilter from '../layout/RoomFilter';
 import {useRoomData} from "../functions/FetchRoomData";
 import StudySpacesBlock from '../layout/StudySpacesBlock';
+import RoomList from '../RoomListPage/RoomList'; // for testing
 
 
 const RoomListPage: React.FC = () => {
@@ -24,6 +25,10 @@ const RoomListPage: React.FC = () => {
                 <StudySpacesBlock filteredRooms={filteredRooms}/>
               </div>
             </div>
+            {/* for testing to see if data loaded correctly */}
+            {/* <div>
+              <RoomList filteredRooms={filteredRooms} />
+            </div> */}
           </div>
         </div>
       </div>

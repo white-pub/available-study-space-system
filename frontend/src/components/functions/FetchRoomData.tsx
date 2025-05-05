@@ -21,6 +21,10 @@ interface Room {
 
     building_id?: string; // ID of the building the room belongs to
     building_name?: string; // Name of the building
+    
+    day_of_week?: string; // building hours
+    open_at?: string;
+    close_at?: string;
 
     is_occupied?: boolean; // Indicates if the room is occupied
 

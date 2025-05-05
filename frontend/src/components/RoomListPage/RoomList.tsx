@@ -6,7 +6,8 @@
 
 import React from "react";
 
-function RoomList({ staticRoomData, occupiedRooms, joinedOccupiedRooms, filteredRooms }) {
+function RoomList({ filteredRooms }) {
+// function RoomList({ staticRoomData, occupiedRooms, joinedOccupiedRooms, filteredRooms }) {
     return (
         <div className="room-list">
             {/* <h2>Room List</h2>
@@ -29,7 +30,7 @@ function RoomList({ staticRoomData, occupiedRooms, joinedOccupiedRooms, filtered
                     );
                 })}
             </ul> */}
-            <h2>Occupied Room List</h2>
+            {/* <h2>Occupied Room List</h2>
             <ul>
                 {joinedOccupiedRooms.map((joinedOccupiedRoom) => {
                     return (
@@ -39,13 +40,14 @@ function RoomList({ staticRoomData, occupiedRooms, joinedOccupiedRooms, filtered
                         </li>
                     );
                 })}
-            </ul>
+            </ul> */}
             <h2>filtered Room List</h2>
             <ul>
                 {filteredRooms.map((rooms) => {
                     return (
                         <li key={rooms.room_id}>
                             {rooms.is_occupied ? "❌ Occupied" : "✅ Available"} - {rooms.building_name} - {rooms.room_name}
+                            {rooms.close_at}
                         </li>
                     );
                 })}
