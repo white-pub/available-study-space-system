@@ -54,7 +54,7 @@ const HomePage: React.FC = () => {
 
                 <div style={{ height: '20px' }}></div> {/* Needed this for space */}
 
-                <Button fullWidth component={Link} to="/home/rooms" size="lg" variant="filled" radius="lg" >GO TO ROOMS</Button>
+                <Button fullWidth component={Link} to="/rooms-list" size="lg" variant="filled" radius="lg" >GO TO ROOMS</Button>
 
             </div>
         </MantineProvider>

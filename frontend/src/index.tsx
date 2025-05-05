@@ -13,7 +13,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/home" element={<HomePage />} />
-        <Route path="/home/rooms" element={<RoomPage />} />
+        <Route path="/rooms-list" element={<RoomPage />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>

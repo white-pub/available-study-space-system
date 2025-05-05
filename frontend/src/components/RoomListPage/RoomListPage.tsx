@@ -7,6 +7,7 @@
 
 import React, { useState, useEffect } from "react";
 import RoomList from "./RoomList";
+import RoomFilter from "../functions/RoomFilter"; // to link the filter function
 // import RoomFilters from "./RoomFilter";
 
 function RoomListPage() {
@@ -31,7 +32,8 @@ function RoomListPage() {
     const [occupiedRooms, setOccupiedRooms] = useState<Room[]>([]);
     const [staticRoomData, setStaticRoomData] = useState<Room[]>([]);
     const [joinedOccupiedRooms, setJoinedOccupiedRooms] = useState<Room[]>([]);
-
+    const [filters, setFilters] = useState<string[]>([]); // Track selected filters
+    
     // Fetch static room data (one-time fetch)
     useEffect(() => {
         const fetchStaticRoomData = async () => {
@@ -83,6 +85,18 @@ function RoomListPage() {
 
         setJoinedOccupiedRooms(updatedJoinedRooms); // Update the state
     }, [staticRoomData, occupiedRooms]); // Re-run whenever staticRoomData or occupiedRooms changes
+
+    // Filter the rooms based on the selected filters
+    const rooms = joinedOccupiedRooms; // Use joinedOccupiedRooms as the list of rooms
+    
+    const filteredRooms = rooms.filter((room) => {
+        // Example filter logic
+        if (filters.includes("Empty Rooms") && room.is_occupied) return false;
+        if (filters.includes("Occupied Rooms") && !room.is_occupied) return false;
+        if (filters.includes("TV") && !room.tv) return false; // Corrected property name to 'tv'
+        if (filters.includes("Library") && room.building_name !== "Library") return false;
+        return true;
+    });
 
     return (
         <div>

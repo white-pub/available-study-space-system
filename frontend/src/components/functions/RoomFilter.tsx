@@ -3,7 +3,7 @@ import { Burger, Checkbox } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import '@mantine/core/styles.css';
 
-const LeftSidebar: React.FC = () => {
+const RoomFilter: React.FC = () => {
   const [opened, { toggle }] = useDisclosure();
   const options = ['Empty Rooms', 'Occupied Rooms', '2-5', '5-10','10+', 'Whiteboard', 'TV', 'Dunklau', 'Thom', 'Library', 'Janzow'];
 
@@ -48,5 +48,5 @@ const LeftSidebar: React.FC = () => {
   );
 };
 
-export default LeftSidebar;
+export default RoomFilter;
 

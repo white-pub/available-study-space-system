@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextInput, Select} from '@mantine/core';
 
-const RightSidebar: React.FC = () => {
+const SearchBar: React.FC = () => {
   const selectData = [
     { value: 'option1', label: 'Option 1' },
     { value: 'option2', label: 'Option 2' },
@@ -27,5 +27,5 @@ const RightSidebar: React.FC = () => {
   );
 };
 
-export default RightSidebar;
+export default SearchBar;
 
