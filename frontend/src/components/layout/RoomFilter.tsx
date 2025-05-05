@@ -40,6 +40,9 @@ const RoomFilter: React.FC<RoomFilterProps> = ({filters, setFilters}) => {
       display: "grid", // Displays in nice columns
       marginBottom: "10px",
       paddingRight: '10px',
+      position: 'fixed',
+      // borderWidth: '3px',
+      boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
     }}>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <Burger

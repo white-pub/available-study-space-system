@@ -49,7 +49,7 @@ const StudySpacesBlock: React.FC<StudySpacesBlockProps> = ({ filteredRooms }) =>
   return (
     <div>
       {/* Header section with centered text */}
-      <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+      <div style={{ textAlign: 'center', marginBottom: '20px' , paddingTop: '50px'}}>
         <h1 style={{ margin: 0 }}>CUNE Study Spaces</h1>
         <h4 style={{ margin: 25 }}>Status | Room</h4>
       </div>
