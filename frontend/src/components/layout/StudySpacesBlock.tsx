@@ -1,21 +1,43 @@
 import React from 'react';
-import { Accordion } from '@mantine/core';
+import { Accordion, Image, Group, Text, Anchor } from '@mantine/core';
+import { useRoomData } from '../functions/FetchRoomData';
+import thomImage from '../../assets/thom_image_placeholder.jpeg'
 
-function StudySpacesBlock({ filteredRooms }) {
-  // Map through filteredRooms to create individual accordion items for each room
+function StudySpacesBlock() {
+  const { filteredRooms } = useRoomData();
+  
+  // Generate accordion items with room details
   const Rooms = filteredRooms.map((room) => (
-    <Accordion.Item 
-      key={room.room_id} 
-      value={`${room.building_name} - ${room.room_name}`} // Unique value for each accordion item
-    >
-      {/* Display the building and room name with an emoji */}
+    
+    <Accordion.Item key={room.room_id} value={`${room.building_name} - ${room.room_name}`}>
+      {/* Display the building and room name with an occupancy emoji */}
       <Accordion.Control icon={room.emoji}>
-        {room.building_name} - {room.room_name}
+        {room.is_occupied ? "❌" : "✅"} {room.building_name} - {room.room_name}
       </Accordion.Control>
-      
+
       {/* Room details inside the expandable panel */}
       <Accordion.Panel>
-        {room.description}
+        <Group>
+          <Image src={thomImage} width={200} height={200} radius="md" />
+          <div>
+            <Text size="sm"><b>Capacity:</b> {room.capacity ?? 'Unknown'}</Text>
+            <Text size="sm"><b>Whiteboards:</b> {room.whiteboard ?? 'None'}</Text>
+            <Text size="sm"><b>TVs:</b> {room.tv ?? 'None'}</Text>
+            {room.description && <Text size="sm"><b>Description:</b> {room.description}</Text>}
+          </div>
+        </Group>
+        <Group mt="md">
+          {room.building_map_url && (
+            <Anchor href={room.building_map_url} target="_blank">
+              📍 Building Map
+            </Anchor>
+          )}
+          {room.campus_map_url && (
+            <Anchor href={room.campus_map_url} target="_blank">
+              🏫 Campus Map
+            </Anchor>
+          )}
+        </Group>
       </Accordion.Panel>
     </Accordion.Item>
   ));
@@ -28,13 +50,13 @@ function StudySpacesBlock({ filteredRooms }) {
         <h4 style={{ margin: 25 }}>Status | Room</h4>
       </div>
 
-      {/* Accordion component with a separated variant and default open item */}
-      <Accordion 
-        variant="separated" // Adds spacing between items
-        radius="md" // Medium border-radius for rounded corners
-        defaultValue={`${filteredRooms[0]?.building_name} - ${filteredRooms[0]?.room_name}`} // Default open item
+      {/* Accordion component with separated variant and default open item */}
+      <Accordion
+        variant="separated"
+        radius="md"
+        defaultValue={filteredRooms[0] ? `${filteredRooms[0].building_name} - ${filteredRooms[0].room_name}` : undefined}
       >
-        {Rooms} {/* Render the mapped accordion items */}
+        {Rooms}
       </Accordion>
     </div>
   );
