@@ -1,3 +1,11 @@
+/*
+StudySpaceBlock.tsx
+Description: This file holds the styling for the main block on the rooms-list page.
+Written by: Abe Gomez and Anna Chen
+
+*/
+
+
 import React from 'react';
 import { Link } from "react-router-dom";
 import { Accordion, Image, Group, Text, Anchor, Button } from '@mantine/core';

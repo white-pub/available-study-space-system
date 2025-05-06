@@ -1,3 +1,10 @@
+/*
+db.ts
+Description: This file holds the types for each database table and the functions needed for backend CRUD.
+Written by: Abe Gomez and Anna Chen
+
+*/
+
 import { Knex } from "knex";
 
 // Define a study space
@@ -50,16 +57,6 @@ type BuildingHours = {
     open_at: Date;
     close_at: Date;
 }
-
-
-
-// Type = Type and more
-// type OccupiedStudySpace = StudySpace & {
-//     occupied: true;
-// };
-
-// Type = Only specifics from another type
-//type CreateStudySpace = Pick<StudySpace, "room_id">
 
 
 // Fetch a study space by its id.
@@ -146,6 +143,7 @@ export async function getAllOccupancyLog(db: Knex): Promise<OccupiedSpaceLog[]> 
     return result as OccupiedSpaceLog[];
 }
 
+// Create an occupied space log via ThunderClient Request.
 export async function createOccupiedSpaceLog(db: Knex, data: {
     room_id: number;
     occupancy_start: Date;
@@ -175,6 +173,7 @@ export async function createOccupiedSpaceLog(db: Knex, data: {
     }
 }
 
+// Update an occupied space log, only occupancy_end time, via ThunderClient Request.
 export async function updateOccupiedSpaceLog(db: Knex, id: number, data: {
     occupancy_end?: Date | null;
 }): Promise<OccupiedSpaceLog | null> {
@@ -195,6 +194,7 @@ export async function updateOccupiedSpaceLog(db: Knex, id: number, data: {
     }
 }
 
+// Delete an occupied space log via ThunderClient Request.
 export async function deleteOccupiedSpaceLog(db: Knex, id: number) {
     try {
         const deletedOccupied = await db("occupancy_logs")

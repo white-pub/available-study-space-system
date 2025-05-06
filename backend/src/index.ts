@@ -1,3 +1,10 @@
+/*
+index.ts
+Description: This file holds the server maintance for the backend.
+Written by: Abe Gomez and Anna Chen
+
+*/
+
 // Import the required modules
 import express from 'express'; // Express is used to create the web server
 import bodyParser from "body-parser"

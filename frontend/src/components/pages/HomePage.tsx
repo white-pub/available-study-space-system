@@ -1,3 +1,11 @@
+/*
+HomePage.tsx
+Description: This file holds the styling for the home page.
+Written by: Abe Gomez
+
+*/
+
+
 import { List, Button, MantineProvider } from "@mantine/core"
 import React from "react"
 import { Text } from '@mantine/core';
@@ -41,9 +49,9 @@ const HomePage: React.FC = () => {
                         padding: '20px',
                         marginTop: '20px',
                         display: 'flex',
-                        flexDirection: 'column', // Stacks items vertically
-                        alignItems: 'flex-start', // Aligns text to the left
-                        justifyContent: 'flex-start', // Ensures items start at the top
+                        flexDirection: 'column',
+                        alignItems: 'flex-start',
+                        justifyContent: 'flex-start',
                     }}>
                     <Text size="lg" fw={700}>HOW TO FIND A STUDY SPACE</Text>
                     <List type="ordered">

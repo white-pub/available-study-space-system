@@ -1,3 +1,11 @@
+/*
+index.tsx
+Description: This file holds routing for the frontend.
+Written by: Abe Gomez and Anna Chen
+
+*/
+
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { StrictMode } from 'react';

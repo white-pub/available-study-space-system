@@ -1,3 +1,10 @@
+/*
+handlers.ts
+Description: This file handles the API for each CRUD functions.
+Written by: Abe Gomez and Anna Chen
+
+*/
+
 // Import the Router module from Express
 import type { Express } from 'express';
 import validate from "express-zod-safe";
