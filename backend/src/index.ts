@@ -50,3 +50,5 @@ function startServer() {
 }
 
 startServer();
+
+export { bootstrapApp };

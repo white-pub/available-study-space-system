@@ -4,8 +4,10 @@
     "esModuleInterop": true,
     "strict": true,
     "noEmit": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "types": ["node", "jest"]
   },
-  "include": ["src/**/*.ts"]
+  
+  "include": ["src/**/*.ts", "src", "tests", "jest.config.ts"]
 }
   
