@@ -1,6 +1,6 @@
 # FindMySpace
 
-FindMySpace is an application that helps students find their favorite study spaces on a busy campus.  
+FindMySpace is a web application that helps students find their favorite study spaces on a busy campus.  
 It is very common for students to have their favorite place to study, but it is very disappointing when  
 this place is occupied, and you have to settle for a suboptimal space.
 
@@ -24,7 +24,7 @@ _(All images are mock pictures for now. In the future, an interactive map may be
 
 ## Features
 - Drop-down details for each study space
-- Material, occupancy, and location data provided  
+- equipment, occupancy, and location data provided  
   - Includes campus and building maps with space pictures
 - Interactive filter to help choose a space
 - Live updates regarding occupancy  
@@ -54,17 +54,18 @@ _(All images are mock pictures for now. In the future, an interactive map may be
 ## Contact Information
 If you need assistance, feel free to reach out:
 
-- **Anna Chen** - [anna.chen@cune.edu](mailto:anna.chen@cune.edu)
+- **Anna Chen** - [a.chen1140110@gmail.com](mailto:a.chen1140110@gmail.com)
 - **Abe Gomez** - [abraham.gomez@student.cune.edu](mailto:abraham.gomez@student.cune.edu)
 - **Caden Korell** - [caden.korell@student.cune.edu](mailto:caden.korell@student.cune.edu)
 
 ## Work Division
 
 - **Anna Chen**  
-  - Database Design and Handling  
-  - Filter Creation and Implementation (SSE)  
-  - Hooks  
-  - Small Styling  
+  - Database Design, implementation, mock data creation, seeding script, docker setup
+  - Data fetching and SSE for real-time occupancy update
+  - Filter logic Creation and Implementation 
+  - Hooks
+  - Some Styling
 
 - **Abe Gomez**  
   - API/routing (backend and frontend)  
@@ -75,5 +76,5 @@ If you need assistance, feel free to reach out:
 
 - **Caden Korell**  
   - Backend Tests  
-  - Small Styling  
+  - Some Styling  
 
