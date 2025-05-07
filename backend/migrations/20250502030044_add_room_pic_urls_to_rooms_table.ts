@@ -1,4 +1,5 @@
-// Add the picture links for room:
+// Add the picture links for room: 
+// Note - the picture links are share links for pictures on google drive
 // room_pic is room picture
 // building_map is the building map where the room is located with the room location marked out
 // campus_map is the campus map with the room location marked out

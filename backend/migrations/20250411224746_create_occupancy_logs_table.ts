@@ -1,3 +1,9 @@
+// Migration: Create Occupancy Logs Table
+// Updated: 2025-04-11
+// 
+// Creates the "occupancy_logs" table, storing information about 
+// room_id and occupancy periods, including start and end times. 
+// Includes foreign key relationship to the `rooms` table (room_id)
 
 /**
  * @param { import("knex").Knex } knex

@@ -1,3 +1,8 @@
+// Migration: Create Buildings Table
+// Updated: 2025-04-09
+// 
+// Creates the "buildings" table, which stores information
+// about buildings, including their ID and name.
 
 /**
  * @param { import("knex").Knex } knex

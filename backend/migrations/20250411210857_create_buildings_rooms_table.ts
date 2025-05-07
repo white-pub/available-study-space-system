@@ -1,3 +1,12 @@
+// Migration: Create Buildings-Rooms Table
+// Updated: 2025-04-11
+// 
+// Creates the "buildings_rooms" table, which establishes
+// a one-to-many relationship between buildings and rooms. (one building have many room)
+// Has foreign key relationships to the buildings and rooms tables through building_id and room_id,
+// has cascading deletes.
+
+
 
 /**
  * @param { import("knex").Knex } knex

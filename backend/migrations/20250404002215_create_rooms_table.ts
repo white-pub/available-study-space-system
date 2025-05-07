@@ -1,4 +1,8 @@
-
+// Migration: Create Rooms Table
+// Updated: 2025-04-04
+// 
+// Creates the "rooms" table, which stores information
+// about rooms, including their ID, name, capacity, distance, number of whiteboards, TVs. 
 
 /**
  * @param { import("knex").Knex } knex

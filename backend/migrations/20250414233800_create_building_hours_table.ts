@@ -1,3 +1,9 @@
+// Migration: Create Building Hours Table
+// Updated: 2025-04-14
+// 
+// Creates the "building_hours" table, which stores
+// information about the opening and closing hours of buildings for each day of the week.
+// It includes a foreign key relationship to the `buildings` table (the building_id)
 
 /**
  * @param { import("knex").Knex } knex
