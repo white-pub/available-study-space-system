@@ -9,7 +9,7 @@ this place is occupied, and you have to settle for a suboptimal space.
 With FindMySpace, all details of study rooms will be viewable. This includes:
 - **Room Number**
 - **Building Name**
-- **Available Materials** (TV, Whiteboard, etc.)
+- **Available Equipments** (TV, Whiteboard, etc.)
 - **Capacity** (How many people it can fit)
 
 All of these preferences can be filtered through to check if your favorite study space is available, and  
