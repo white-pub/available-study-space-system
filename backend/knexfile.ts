@@ -1,4 +1,8 @@
-// Update knex config settings.
+// backend/knexfile.ts
+// Updated: 2025-05-06
+// 
+// Knex is used to manage migration and as query builder to the MySQL database
+// This is the knex config settings.
 
 import * as dotenv from 'dotenv';
 dotenv.config({ path: '../.env' });

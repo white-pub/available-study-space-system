@@ -1,22 +1,23 @@
-/*
-StudySpaceBlock.tsx
-Description: This file holds the styling for the main block on the rooms-list page.
-Written by: Abe Gomez and Anna Chen
-
-*/
+// frontend/src/components/layout/StudySpacesBlock.tsx
+// Updated: 2025-05-06
+// Written by: Abe Gomez and Anna Chen
+//
+// Contains the StudySpacesBlock component: the main block on the rooms-list page
+// Include styling and displaying room detail info and links to map. 
+// Note: all mock up picture for now
 
 
 import React from 'react';
 import { Link } from "react-router-dom";
 import { Accordion, Image, Group, Text, Anchor, Button } from '@mantine/core';
 import thomImage from '../../assets/thom_image_placeholder.jpeg'
+import { Room } from '../functions/FetchRoomData'; // Import the Room type
 
 interface StudySpacesBlockProps {
   filteredRooms: Room[];
 }
 
 const StudySpacesBlock: React.FC<StudySpacesBlockProps> = ({ filteredRooms }) => {
-  
   
   // Generate accordion items with room details
   const Rooms = filteredRooms.map((room) => (
@@ -35,7 +36,11 @@ const StudySpacesBlock: React.FC<StudySpacesBlockProps> = ({ filteredRooms }) =>
             <Text size="sm"><b>Capacity:</b> {room.capacity ?? 'Unknown'}</Text>
             <Text size="sm"><b>Whiteboards:</b> {room.whiteboard ?? 'None'}</Text>
             <Text size="sm"><b>TVs:</b> {room.tv ?? 'None'}</Text>
-            {room.description && <Text size="sm"><b>Description:</b> {room.description}</Text>}
+            {/* Building hours("HH:mm:ss") - Extract only the "HH:mm" part*/}
+            <Text size="sm">
+              <b>Note:</b> Building opens at{" "}{room.open_at ? room.open_at.slice(0, 5) : 'None'}
+              {" "}and closes at{" "}{room.close_at ? room.close_at.slice(0, 5) : 'None'}
+            </Text>
           </div>
         </Group>
         <Group mt="md">

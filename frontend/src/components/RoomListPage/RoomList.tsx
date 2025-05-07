@@ -1,5 +1,5 @@
 // frontend/src/components/RoomListPage/RoomList.tsx
-// Updated: 2025-5-4
+// Updated: 2025-05-04
 // 
 // Displays the different set of data in list format
 // For testing purpose

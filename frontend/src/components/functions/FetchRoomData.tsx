@@ -9,7 +9,7 @@ import { useState, useEffect, useMemo } from "react";
 
 
 
-interface Room {
+export interface Room {
     room_id: string; // Unique identifier for the room
     room_name?: string; // Name of the room
     capacity?: number; // Capacity of the room. 3 means can have 3 people inside
